@@ -1,0 +1,721 @@
+<!doctype html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Modern Technical Workflows in Game Development — Keynote</title>
+  <link rel="stylesheet" href="./styles.css" />
+</head>
+<body>
+  <!-- Ambient background -->
+  <div class="bg">
+    <div class="bg__gradient"></div>
+    <div class="bg__grid"></div>
+    <div class="bg__grain"></div>
+  </div>
+
+  <!-- Top bar -->
+  <header class="topbar" role="banner">
+    <div class="brand">
+      <span class="brand__mark" aria-hidden="true"></span>
+      <span class="brand__text">Keynote</span>
+    </div>
+    <div class="topbar__center">
+      <div class="progress" aria-hidden="true"><div id="progress-bar"></div></div>
+    </div>
+    <div class="topbar__right">
+      <button id="theme-toggle" class="btn btn--icon" type="button" title="Toggle theme (T)" aria-label="Toggle dark/light mode">
+        <svg class="icon icon--sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <circle cx="12" cy="12" r="5"/>
+          <path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/>
+        </svg>
+        <svg class="icon icon--moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+        </svg>
+      </button>
+      <button id="grid-toggle" class="btn btn--icon" type="button" title="Grid overview (G)" aria-label="Show grid overview">
+        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <rect x="3" y="3" width="7" height="7"/>
+          <rect x="14" y="3" width="7" height="7"/>
+          <rect x="14" y="14" width="7" height="7"/>
+          <rect x="3" y="14" width="7" height="7"/>
+        </svg>
+      </button>
+      <button id="notes-toggle" class="btn btn--icon" type="button" title="Speaker notes (N)" aria-label="Show speaker notes">
+        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+          <polyline points="14,2 14,8 20,8"/>
+          <line x1="16" y1="13" x2="8" y2="13"/>
+          <line x1="16" y1="17" x2="8" y2="17"/>
+          <polyline points="10,9 9,9 8,9"/>
+        </svg>
+      </button>
+      <div class="timer" id="timer" title="Timer (starts on first advance)">
+        <span id="timer-dot" aria-hidden="true">●</span>
+        <span id="timer-mm">00</span>:<span id="timer-ss">00</span>
+      </div>
+    </div>
+  </header>
+
+  <!-- Slides -->
+  <main id="deck" aria-live="polite">
+    <!-- COVER -->
+    <section class="slide cover center" data-notes="Open with energy. Set the stage for modern game development workflows.">
+      <div class="cover-icon">
+        <span class="emoji-icon">🎮</span>
+      </div>
+      <h1>Modern Technical Workflows</h1>
+      <p class="subtitle">in Game Development</p>
+      <p class="meta">Sreyeesh Garimella • 2025</p>
+      <small class="hint">←/→ or Space/Backspace • <kbd>F</kbd> fullscreen • <kbd>T</kbd> theme • <kbd>G</kbd> grid • <kbd>N</kbd> notes</small>
+    </section>
+
+    <!-- HOOK -->
+    <section class="slide center" data-notes="Connect with audience. Make it relatable to their experiences.">
+      <div class="slide-icon">
+        <span class="emoji-icon">🎮</span>
+      </div>
+      <h2>Game Development Reality</h2>
+      <p class="lede">One of the most exciting creative industries</p>
+      <div class="fragment">
+        <p class="lede">But also one of the most complex</p>
+      </div>
+      <div class="fragment">
+        <p class="muted">💥 Build breaks minutes before demo</p>
+      </div>
+      <div class="fragment">
+        <p class="muted">🤷‍♂️ Nobody knows which version is correct</p>
+      </div>
+      <div class="fragment">
+        <p class="muted">💻 Runs on one computer, crashes on another</p>
+      </div>
+    </section>
+
+    <!-- CORE MESSAGE -->
+    <section class="slide quote center" data-notes="This is the key message. Pause for effect.">
+      <div class="quote-icon">
+        <span class="emoji-icon">💬</span>
+      </div>
+      <blockquote>"Workflows are not bureaucracy. They are survival."</blockquote>
+      <p class="fragment lede">The invisible systems that let creativity flow without being crushed by disorder</p>
+    </section>
+
+    <!-- AGENDA -->
+    <section class="slide" data-notes="Give them the roadmap of what we'll cover.">
+      <div class="slide-header">
+        <div class="slide-icon">
+          <span class="emoji-icon">🗺️</span>
+        </div>
+        <h2>Today's Pipeline</h2>
+      </div>
+      <div class="pipeline-overview">
+        <div class="pipeline-item fragment">
+          <div class="item-icon">
+            <span class="emoji-icon">📚</span>
+          </div>
+          <h3>Version Control</h3>
+          <p>Source & asset management</p>
+        </div>
+        <div class="pipeline-item fragment">
+          <div class="item-icon">
+            <span class="emoji-icon">🛠️</span>
+          </div>
+          <h3>Build Automation</h3>
+          <p>Compiling & packaging</p>
+        </div>
+        <div class="pipeline-item fragment">
+          <div class="item-icon">
+            <span class="emoji-icon">📦</span>
+          </div>
+          <h3>Asset Management</h3>
+          <p>Organization & import</p>
+        </div>
+        <div class="pipeline-item fragment">
+          <div class="item-icon">
+            <span class="emoji-icon">🐛</span>
+          </div>
+          <h3>Testing</h3>
+          <p>Quality & performance</p>
+        </div>
+        <div class="pipeline-item fragment">
+          <div class="item-icon">
+            <span class="emoji-icon">📝</span>
+          </div>
+          <h3>Documentation</h3>
+          <p>Communication & visibility</p>
+        </div>
+        <div class="pipeline-item fragment">
+          <div class="item-icon">
+            <span class="emoji-icon">🚀</span>
+          </div>
+          <h3>Integration & Release</h3>
+          <p>Safe delivery</p>
+        </div>
+        <div class="pipeline-item fragment">
+          <div class="item-icon">
+            <span class="emoji-icon">🏗️</span>
+          </div>
+          <h3>Scope Management</h3>
+          <p>Vertical slice approach</p>
+        </div>
+        <div class="pipeline-item fragment">
+          <div class="item-icon">
+            <span class="emoji-icon">✨</span>
+          </div>
+          <h3>Technical Art</h3>
+          <p>Performance & optimization</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- WHY WORKFLOWS MATTER - DETAILED -->
+    <section class="slide" data-notes="Explain the unique challenges of game development.">
+      <div class="slide-header">
+        <div class="slide-icon">
+          <span class="emoji-icon">🎯</span>
+        </div>
+        <div>
+          <h2 class="eyebrow">Foundation</h2>
+          <h2>Why Workflows Matter</h2>
+          <p class="lede">Game development is unique because of its complexity</p>
+        </div>
+      </div>
+      
+      <div class="workflow-challenges">
+        <div class="challenge-item fragment">
+          <div class="item-icon">
+            <span class="emoji-icon">💻</span>
+          </div>
+          <h3>Not Just Code</h3>
+          <p>Like software projects</p>
+        </div>
+        <div class="challenge-item fragment">
+          <div class="item-icon">
+            <span class="emoji-icon">🎨</span>
+          </div>
+          <h3>Not Just Art</h3>
+          <p>Like films</p>
+        </div>
+        <div class="challenge-item fragment">
+          <div class="item-icon">
+            <span class="emoji-icon">🎮</span>
+          </div>
+          <h3>Interactive</h3>
+          <p>Player-driven systems</p>
+        </div>
+        <div class="challenge-item fragment">
+          <div class="item-icon">
+            <span class="emoji-icon">🔗</span>
+          </div>
+          <h3>Systemic</h3>
+          <p>Everything connects</p>
+        </div>
+        <div class="challenge-item fragment">
+          <div class="item-icon">
+            <span class="emoji-icon">🔄</span>
+          </div>
+          <h3>Evolving</h3>
+          <p>Constantly changing</p>
+        </div>
+        <div class="challenge-item fragment">
+          <div class="item-icon">
+            <span class="emoji-icon">🌊</span>
+          </div>
+          <h3>Cascading</h3>
+          <p>Small problems become big ones</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- WORKFLOW BENEFITS -->
+    <section class="slide" data-notes="Show the benefits of having proper workflows.">
+      <div class="slide-header">
+        <div class="slide-icon">
+          <span class="emoji-icon">⚖️</span>
+        </div>
+        <h2>Without vs With Workflows</h2>
+      </div>
+      
+      <div class="comparison-grid">
+        <div class="comparison-column">
+          <div class="comparison-header">
+            <div class="item-icon">
+              <span class="emoji-icon">😰</span>
+            </div>
+            <h3>Without Workflows</h3>
+          </div>
+          <ul class="comparison-list">
+            <li class="fragment">💥 Files get overwritten</li>
+            <li class="fragment">💥 Broken builds stop progress</li>
+            <li class="fragment">🔄 People work on outdated versions</li>
+            <li class="fragment">🐛 Bugs appear late</li>
+            <li class="fragment">🤷‍♂️ Knowledge lives in people's heads</li>
+            <li class="fragment">🌪️ Chaos under pressure</li>
+          </ul>
+        </div>
+        
+        <div class="comparison-column">
+          <div class="comparison-header">
+            <div class="item-icon">
+              <span class="emoji-icon">🤝</span>
+            </div>
+            <h3>With Workflows</h3>
+          </div>
+          <ul class="comparison-list">
+            <li class="fragment">🤝 Everyone works in sync</li>
+            <li class="fragment">✅ Game is always playable</li>
+            <li class="fragment">💡 Issues caught early</li>
+            <li class="fragment">🎨 More energy on creativity</li>
+            <li class="fragment">🤷‍♂️ Knowledge is documented</li>
+            <li class="fragment">⚖️ Stability under pressure</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- REAL EXAMPLE -->
+    <section class="slide" data-notes="Share a real example to make it relatable.">
+      <div class="slide-header">
+        <div class="slide-icon">
+          <span class="emoji-icon">🎯</span>
+        </div>
+        <h2>Real Example</h2>
+      </div>
+      
+      <div class="story-card">
+        <div class="story-header">
+          <div class="item-icon">
+            <span class="emoji-icon">🎓</span>
+          </div>
+          <h3>Student Project Disaster</h3>
+        </div>
+        <p class="lede">Two teams worked on the same map</p>
+        <ul class="story-list">
+          <li class="fragment">❌ No source control</li>
+          <li class="fragment">💾 Local copies only</li>
+          <li class="fragment">💥 One overwrote the other</li>
+          <li class="fragment">😭 Three days of work gone</li>
+        </ul>
+        <div class="fragment">
+          <div class="solution">
+            <div class="item-icon">
+              <span class="emoji-icon">✅</span>
+            </div>
+            <p class="muted">Solution: Git with branches and rules</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- FOUR ESSENTIALS -->
+    <section class="slide" data-notes="Explain the four essential things workflows give us.">
+      <div class="slide-header">
+        <div class="slide-icon">
+          <span class="emoji-icon">🎯</span>
+        </div>
+        <h2>Four Essential Things</h2>
+      </div>
+      <div class="essentials-grid">
+        <div class="essential-item fragment">
+          <div class="item-icon">
+            <span class="emoji-icon">🔄</span>
+          </div>
+          <h3>Consistency</h3>
+          <p>Every time we repeat a process, we want the same result</p>
+        </div>
+        <div class="essential-item fragment">
+          <div class="item-icon">
+            <span class="emoji-icon">🔍</span>
+          </div>
+          <h3>Traceability</h3>
+          <p>Record of who changed what and why</p>
+        </div>
+        <div class="essential-item fragment">
+          <div class="item-icon">
+            <span class="emoji-icon">🤝</span>
+          </div>
+          <h3>Collaboration</h3>
+          <p>Multiple people work in parallel without stepping on each other</p>
+        </div>
+        <div class="essential-item fragment">
+          <div class="item-icon">
+            <span class="emoji-icon">⚖️</span>
+          </div>
+          <h3>Stability</h3>
+          <p>Always be able to click "Play" and get a working build</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- KEY MESSAGE -->
+    <section class="slide quote center" data-notes="Emphasize this key takeaway.">
+      <div class="quote-icon">
+        <span class="emoji-icon">💡</span>
+      </div>
+      <blockquote>"We're not talking about process for process' sake. We're talking about survival in a complex, multi-disciplinary environment."</blockquote>
+    </section>
+
+    <!-- SECTION BREAK -->
+    <section class="slide section" data-notes="Transition to the technical workflows.">
+      <div class="slide-header">
+        <div class="slide-icon">
+          <span class="emoji-icon">⚙️</span>
+        </div>
+        <div>
+          <h2 class="eyebrow">Technical Workflows</h2>
+          <h2>Eight Essential Systems</h2>
+          <p class="lede">The backbone of game production</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 1. VERSION CONTROL -->
+    <section class="slide" data-notes="Emphasize version control as the foundation.">
+      <div class="slide-header">
+        <div class="slide-icon">
+          <span class="emoji-icon">📚</span>
+        </div>
+        <h2>1. Source & Version Control</h2>
+      </div>
+      <p class="lede">The first building block. Records every change, who made it, and when.</p>
+      
+      <div class="workflow-details">
+        <div class="detail-item fragment">
+          <div class="item-icon">
+            <span class="emoji-icon">💾</span>
+          </div>
+          <h3>Purpose</h3>
+          <p>Single source of truth for all changes. Enables branching, merging, and recovery.</p>
+        </div>
+        <div class="detail-item fragment">
+          <div class="item-icon">
+            <span class="emoji-icon">🛠️</span>
+          </div>
+          <h3>Tools</h3>
+          <p>Git with Git LFS, Perforce (AAA), Plastic SCM (Unity)</p>
+        </div>
+        <div class="detail-item fragment">
+          <div class="item-icon">
+            <span class="emoji-icon">📋</span>
+          </div>
+          <h3>Practices</h3>
+          <p>Branching strategy, commit messages that capture intent, tag builds</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- VERSION CONTROL DETAILS -->
+    <section class="slide" data-notes="Go deeper into version control practices.">
+      <h2>Version Control Deep Dive</h2>
+      <div class="twocol">
+        <div>
+          <h3>Branching Strategies</h3>
+          <ul class="bullets">
+            <li class="fragment">Trunk-based for frequent merges</li>
+            <li class="fragment">Feature-branching for isolation</li>
+            <li class="fragment">Choose based on team size</li>
+          </ul>
+        </div>
+        <div>
+          <h3>Commit Messages</h3>
+          <ul class="bullets">
+            <li class="fragment">Explain *why* not just *what*</li>
+            <li class="fragment">Turn history into documentation</li>
+            <li class="fragment">Enable better debugging</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- 2. BUILD PIPELINES -->
+    <section class="slide" data-notes="Show the power of automation.">
+      <h2>2. Build Pipelines</h2>
+      <p class="lede">The machinery that transforms source and assets into playable builds</p>
+      
+      <div class="build-benefits">
+        <div class="benefit-item fragment">
+          <h3>Manual Builds</h3>
+          <p>Fragile, single point of failure</p>
+        </div>
+        <div class="benefit-item fragment">
+          <h3>Automated Builds</h3>
+          <p>Reliable, every change validated quickly</p>
+        </div>
+        <div class="benefit-item fragment">
+          <h3>Team Confidence</h3>
+          <p>"If it built on the server, it will run on my machine"</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- BUILD PIPELINE DETAILS -->
+    <section class="slide" data-notes="Show specific tools and practices.">
+      <h2>Build Pipeline Tools & Practices</h2>
+      <div class="twocol">
+        <div>
+          <h3>Tools</h3>
+          <ul class="bullets">
+            <li class="fragment">Unity Cloud Build</li>
+            <li class="fragment">Unreal Automation Tool</li>
+            <li class="fragment">Jenkins, GitHub Actions</li>
+            <li class="fragment">Azure Pipelines</li>
+          </ul>
+        </div>
+        <div>
+          <h3>Best Practices</h3>
+          <ul class="bullets">
+            <li class="fragment">Trigger on commits/merges</li>
+            <li class="fragment">Integrate smoke tests</li>
+            <li class="fragment">Archive artifacts</li>
+            <li class="fragment">Enable rollback</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- 3. ASSET MANAGEMENT -->
+    <section class="slide" data-notes="Show concrete examples of asset organization.">
+      <h2>3. Asset Management</h2>
+      <p class="lede">Games are asset-heavy. 3D models, textures, animations, sounds, UI, shaders.</p>
+      
+      <div class="asset-challenges">
+        <div class="challenge-item fragment">
+          <h3>Large & Numerous</h3>
+          <p>Without consistent naming, multiple versions creep in</p>
+        </div>
+        <div class="challenge-item fragment">
+          <h3>Inconsistent Properties</h3>
+          <p>Scale, pivots, materials create endless bugs</p>
+        </div>
+        <div class="challenge-item fragment">
+          <h3>Repository Impact</h3>
+          <p>Large assets can break repositories or balloon builds</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ASSET MANAGEMENT DETAILS -->
+    <section class="slide" data-notes="Show specific naming and organization examples.">
+      <h2>Asset Management Solutions</h2>
+      <div class="asset-solutions">
+        <div class="fragment">
+          <h3>Naming Conventions</h3>
+          <pre class="codeblock"><code>CHAR_Hero_Idle_v001.fbx
+ENV_Forest_Tree_Oak_01.fbx
+UI_MainMenu_Button_Play.png</code></pre>
+        </div>
+        <div class="fragment">
+          <h3>Folder Structure</h3>
+          <pre class="codeblock"><code>Assets/
+├── Characters/
+├── Environments/
+├── Audio/
+├── VFX/
+└── UI/</code></pre>
+        </div>
+        <div class="fragment">
+          <h3>Engine Integration</h3>
+          <p><strong>Unity:</strong> AssetPostprocessor, Import Presets</p>
+          <p><strong>Unreal:</strong> Reimport rules, Derived Data Cache</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 4. TESTING -->
+    <section class="slide" data-notes="Emphasize the different types of testing.">
+      <h2>4. Testing Workflows</h2>
+      <p class="lede">Games are complex systems where one small change can break ten other things</p>
+      
+      <div class="testing-types">
+        <div class="test-item fragment">
+          <h3>Unit Tests</h3>
+          <p>Check small, isolated systems</p>
+        </div>
+        <div class="test-item fragment">
+          <h3>Integration Tests</h3>
+          <p>Validate subsystems working together</p>
+        </div>
+        <div class="test-item fragment">
+          <h3>Smoke Tests</h3>
+          <p>Confirm game launches and loads levels</p>
+        </div>
+        <div class="test-item fragment">
+          <h3>Performance Tests</h3>
+          <p>Measure FPS, memory, load times</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 5. DOCUMENTATION -->
+    <section class="slide" data-notes="Keep it lightweight but essential.">
+      <h2>5. Documentation & Communication</h2>
+      <p class="lede">Workflows only matter if they are known and followed</p>
+      
+      <div class="doc-workflow">
+        <div class="fragment">
+          <h3>Why They Matter</h3>
+          <p>Without documentation, knowledge is siloed and disappears when people leave</p>
+        </div>
+        <div class="fragment">
+          <h3>Tools</h3>
+          <p>Notion, Confluence, HacknPlan, Slack, Discord</p>
+        </div>
+        <div class="fragment">
+          <h3>Practices</h3>
+          <p>Document *why* as well as *how*. Connect repos to communication platforms</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 6. INTEGRATION & RELEASE -->
+    <section class="slide" data-notes="Show the importance of safe delivery.">
+      <h2>6. Integration & Release Workflow</h2>
+      <p class="lede">Release is when workflows are tested most. Without strong workflows, it's chaos.</p>
+      
+      <div class="release-workflow">
+        <div class="fragment">
+          <h3>Feature Flags</h3>
+          <p>Incomplete features can be merged without breaking the build</p>
+        </div>
+        <div class="fragment">
+          <h3>Release Checklists</h3>
+          <p>Freeze, validate, package, distribute</p>
+        </div>
+        <div class="fragment">
+          <h3>Daily Integration</h3>
+          <p>Reduce merge conflicts with regular builds</p>
+        </div>
+        <div class="fragment">
+          <h3>Rollback Strategies</h3>
+          <p>Archive builds and configs for quick recovery</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 7. SCOPE MANAGEMENT -->
+    <section class="slide" data-notes="Emphasize the vertical slice approach.">
+      <h2>7. Scope & Vertical Slice Workflow</h2>
+      <p class="lede">Scope kills projects more than anything else. That's why we manage it with vertical slices.</p>
+      
+      <div class="scope-workflow">
+        <div class="fragment">
+          <h3>Why It Matters</h3>
+          <p>Ambition without discipline leads to unfinished projects</p>
+        </div>
+        <div class="fragment">
+          <h3>Vertical Slice</h3>
+          <p>One complete piece with gameplay, art, audio, and UI</p>
+        </div>
+        <div class="fragment">
+          <h3>Milestone Stages</h3>
+          <p>Prototype → Vertical Slice → Alpha → Beta → Launch</p>
+        </div>
+        <div class="fragment">
+          <h3>Scope Discipline</h3>
+          <p>Defer non-critical features until slice is validated</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 8. TECHNICAL ART -->
+    <section class="slide" data-notes="Show the intersection of art and engineering.">
+      <h2>8. Technical Art Workflows</h2>
+      <p class="lede">Bridge art and engineering. Where performance, visuals, and scalability meet.</p>
+      
+      <div class="tech-art-workflow">
+        <div class="fragment">
+          <h3>Shader Libraries</h3>
+          <p>Shared, optimized shaders for consistency</p>
+        </div>
+        <div class="fragment">
+          <h3>LOD Pipelines</h3>
+          <p>Automate creation and validation of LODs</p>
+        </div>
+        <div class="fragment">
+          <h3>Optimization Budgets</h3>
+          <p>Polycount, texture resolution, draw calls</p>
+        </div>
+        <div class="fragment">
+          <h3>Asset Validation</h3>
+          <p>Automated checks for pivots, scales, UVs, metrics</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION BREAK -->
+    <section class="slide section" data-notes="Look to the future.">
+      <h2 class="eyebrow">Future</h2>
+      <h2>Evolution of Workflows</h2>
+      <p class="lede">Workflows continue to evolve</p>
+    </section>
+
+    <!-- FUTURE TRENDS -->
+    <section class="slide" data-notes="Show the evolution of workflows.">
+      <h2>Emerging Trends</h2>
+      <div class="future-trends">
+        <div class="trend-item fragment">
+          <h3>AI-Driven Pipelines</h3>
+          <p>Bots running QA tests, tagging assets, triaging bugs</p>
+        </div>
+        <div class="trend-item fragment">
+          <h3>Cloud-Native Development</h3>
+          <p>Entire studios running in cloud editors, no heavy local hardware</p>
+        </div>
+        <div class="trend-item fragment">
+          <h3>Procedural Workflows</h3>
+          <p>Automated validation and curation for endless or dynamic content</p>
+        </div>
+      </div>
+      <div class="fragment">
+        <p class="lede">Workflows will become more intelligent, invisible, and essential</p>
+      </div>
+    </section>
+
+    <!-- CLOSING -->
+    <section class="slide center closing" data-notes="End with the key questions. Pause for effect.">
+      <h2>One Question</h2>
+      <div class="fragment">
+        <p class="lede">What workflows will carry us to the finish line?</p>
+      </div>
+      <div class="fragment">
+        <p class="muted">Workflows are the difference between endless prototypes and playable games</p>
+      </div>
+    </section>
+
+    <!-- THANK YOU -->
+    <section class="slide cover center" data-notes="Thank the audience. End on a high note.">
+      <div class="cover-icon">
+        <span class="emoji-icon">🎮</span>
+      </div>
+      <h1>Thank You!</h1>
+      <p class="subtitle">Questions?</p>
+      <p class="meta">Sreyeesh Garimella • 2025</p>
+    </section>
+  </main>
+
+  <!-- Footer controls -->
+  <footer class="footer" role="toolbar" aria-label="Slide controls">
+    <span id="slide-counter" aria-live="polite">1 / 1</span>
+    <div class="controls">
+      <button id="prev" class="btn btn--nav" aria-label="Previous slide" type="button">
+        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <polyline points="15,18 9,12 15,6"/>
+        </svg>
+      </button>
+      <button id="next" class="btn btn--nav" aria-label="Next slide" type="button">
+        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <polyline points="9,18 15,12 9,6"/>
+        </svg>
+      </button>
+    </div>
+  </footer>
+
+  <!-- Speaker notes panel -->
+  <aside id="notes-panel" class="notes" aria-live="polite" aria-label="Speaker notes"></aside>
+
+  <!-- Grid overview -->
+  <div id="grid" class="grid" aria-hidden="true"></div>
+
+  <script src="./script.js"></script>
+</body>
+</html>

@@ -1,0 +1,11 @@
+# Ensure consistent LF line endings
+* text=auto eol=lf
+
+# Binary files (don’t diff in Git)
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.gif binary
+*.svg text
+*.pdf binary
+*.ico binary
