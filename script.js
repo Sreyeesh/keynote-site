@@ -2,15 +2,6 @@
     // --- Elements
     const slides = Array.from(document.querySelectorAll(".slide"));
     const progressBar = document.getElementById("progress-bar");
-    const counter = document.getElementById("slide-counter");
-    const prevBtn = document.getElementById("prev");
-    const nextBtn = document.getElementById("next");
-    const themeToggle = document.getElementById("theme-toggle");
-    const gridToggle = document.getElementById("grid-toggle");
-    const notesToggle = document.getElementById("notes-toggle");
-    const notesPanel = document.getElementById("notes-panel");
-    const grid = document.getElementById("grid");
-    const html = document.documentElement;
     const timerMM = document.getElementById("timer-mm");
     const timerSS = document.getElementById("timer-ss");
     const timerDot = document.getElementById("timer-dot");
@@ -39,8 +30,6 @@
       });
       const pct = ((i + 1) / slides.length) * 100;
       progressBar.style.width = pct + "%";
-      counter.textContent = `${i + 1} / ${slides.length}`;
-      notesPanel.textContent = slides[i].dataset.notes || "";
       if (!fromHash) history.replaceState({}, "", `#${i + 1}`);
     }
   
@@ -67,22 +56,6 @@
       setSlide(i - 1);
     }
   
-    function initTheme() {
-      try {
-        const saved = localStorage.getItem("keynote-theme");
-        if (saved) {
-          html.setAttribute("data-theme", saved);
-          themeToggle.setAttribute("data-theme", saved);
-        }
-      } catch {}
-    }
-    function toggleTheme() {
-      const cur = html.getAttribute("data-theme") || "dark";
-      const next = cur === "dark" ? "light" : "dark";
-      html.setAttribute("data-theme", next);
-      themeToggle.setAttribute("data-theme", next);
-      try { localStorage.setItem("keynote-theme", next); } catch {}
-    }
   
     // --- Timer
     function startTimer() {
@@ -95,41 +68,7 @@
       }, 500);
     }
   
-    // --- Grid overview
-    function buildGrid() {
-      grid.innerHTML = "";
-      slides.forEach((s, idx) => {
-        const t = document.createElement("div");
-        t.className = "thumb";
-        const title = s.querySelector("h1, h2, h3")?.textContent?.trim() || `Slide ${idx+1}`;
-        const h = document.createElement("h3");
-        h.textContent = `${idx+1}. ${title}`;
-        const mini = document.createElement("div");
-        mini.className = "mini";
-        // lightweight preview: clone heading & first list/paragraph
-        const clone = s.cloneNode(true);
-        // strip heavy stuff
-        clone.querySelectorAll("script, video, audio").forEach(el => el.remove());
-        // keep only first 2 elements
-        const keep = Array.from(clone.children).slice(0,2);
-        mini.append(...keep);
-        t.append(h, mini);
-        t.addEventListener("click", () => {
-          document.body.classList.remove("show-grid");
-          setSlide(idx);
-        });
-        grid.appendChild(t);
-      });
-    }
   
-    function toggleGrid() {
-      const on = document.body.classList.toggle("show-grid");
-      if (on) buildGrid();
-    }
-  
-    function toggleNotes() {
-      document.body.classList.toggle("show-notes");
-    }
   
     // --- Touch (basic swipe)
     function onTouchStart(e) {
@@ -146,11 +85,6 @@
     }
   
     // --- Events
-    prevBtn.addEventListener("click", back);
-    nextBtn.addEventListener("click", advance);
-    themeToggle.addEventListener("click", toggleTheme);
-    gridToggle.addEventListener("click", toggleGrid);
-    notesToggle.addEventListener("click", toggleNotes);
   
     window.addEventListener("keydown", (e) => {
       if (["INPUT","TEXTAREA"].includes(document.activeElement.tagName)) return;
@@ -162,17 +96,12 @@
         if (!document.fullscreenElement) document.documentElement.requestFullscreen?.();
         else document.exitFullscreen?.();
       }
-      if (k === "t") toggleTheme();
-      if (k === "g") toggleGrid();
-      if (k === "n") toggleNotes();
-      if (k === "escape" && document.body.classList.contains("show-grid")) toggleGrid();
     });
   
     document.addEventListener("touchstart", onTouchStart, { passive:true });
     document.addEventListener("touchend", onTouchEnd, { passive:true });
   
     // Init
-    initTheme();
     slides.forEach(s => frags(s).forEach(f => f.classList.remove("is-visible")));
     const fromHash = parseInt(location.hash.replace("#",""), 10);
     if (!Number.isNaN(fromHash) && fromHash >= 1 && fromHash <= slides.length) {

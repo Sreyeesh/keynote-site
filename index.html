@@ -24,32 +24,6 @@
       <div class="progress" aria-hidden="true"><div id="progress-bar"></div></div>
     </div>
     <div class="topbar__right">
-      <button id="theme-toggle" class="btn btn--icon" type="button" title="Toggle theme (T)" aria-label="Toggle dark/light mode">
-        <svg class="icon icon--sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-          <circle cx="12" cy="12" r="5"/>
-          <path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/>
-        </svg>
-        <svg class="icon icon--moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-          <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
-        </svg>
-      </button>
-      <button id="grid-toggle" class="btn btn--icon" type="button" title="Grid overview (G)" aria-label="Show grid overview">
-        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-          <rect x="3" y="3" width="7" height="7"/>
-          <rect x="14" y="3" width="7" height="7"/>
-          <rect x="14" y="14" width="7" height="7"/>
-          <rect x="3" y="14" width="7" height="7"/>
-        </svg>
-      </button>
-      <button id="notes-toggle" class="btn btn--icon" type="button" title="Speaker notes (N)" aria-label="Show speaker notes">
-        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-          <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
-          <polyline points="14,2 14,8 20,8"/>
-          <line x1="16" y1="13" x2="8" y2="13"/>
-          <line x1="16" y1="17" x2="8" y2="17"/>
-          <polyline points="10,9 9,9 8,9"/>
-        </svg>
-      </button>
       <div class="timer" id="timer" title="Timer (starts on first advance)">
         <span id="timer-dot" aria-hidden="true">●</span>
         <span id="timer-mm">00</span>:<span id="timer-ss">00</span>
@@ -67,7 +41,7 @@
       <h1>Modern Technical Workflows</h1>
       <p class="subtitle">in Game Development</p>
       <p class="meta">Sreyeesh Garimella • 2025</p>
-      <small class="hint">←/→ or Space/Backspace • <kbd>F</kbd> fullscreen • <kbd>T</kbd> theme • <kbd>G</kbd> grid • <kbd>N</kbd> notes</small>
+      <small class="hint">←/→ or Space/Backspace • <kbd>F</kbd> fullscreen</small>
     </section>
 
     <!-- HOOK -->
@@ -693,28 +667,6 @@ UI_MainMenu_Button_Play.png</code></pre>
     </section>
   </main>
 
-  <!-- Footer controls -->
-  <footer class="footer" role="toolbar" aria-label="Slide controls">
-    <span id="slide-counter" aria-live="polite">1 / 1</span>
-    <div class="controls">
-      <button id="prev" class="btn btn--nav" aria-label="Previous slide" type="button">
-        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-          <polyline points="15,18 9,12 15,6"/>
-        </svg>
-      </button>
-      <button id="next" class="btn btn--nav" aria-label="Next slide" type="button">
-        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-          <polyline points="9,18 15,12 9,6"/>
-        </svg>
-      </button>
-    </div>
-  </footer>
-
-  <!-- Speaker notes panel -->
-  <aside id="notes-panel" class="notes" aria-live="polite" aria-label="Speaker notes"></aside>
-
-  <!-- Grid overview -->
-  <div id="grid" class="grid" aria-hidden="true"></div>
 
   <script src="./script.js"></script>
 </body>
