@@ -1,5 +1,6 @@
 (function () {
   // --- Elements
+  const presentationMode = document.getElementById("presentation-mode");
   const slides = Array.from(document.querySelectorAll(".slide"));
   const progressBar = document.getElementById("progress-bar");
   const timerMM = document.getElementById("timer-mm");
@@ -7,20 +8,23 @@
   const timerDot = document.getElementById("timer-dot");
   const slideCounter = document.getElementById("slide-counter");
   const themeToggle = document.getElementById("theme-toggle");
-  const shortcutsOverlay = document.getElementById("shortcuts-overlay");
   const prevBtn = document.getElementById("prev-btn");
   const nextBtn = document.getElementById("next-btn");
   const fullscreenBtn = document.getElementById("fullscreen-btn");
+  const exitPresentationBtn = document.getElementById("exit-presentation");
+  const startPresentationBtn = document.getElementById("start-presentation");
+  const startPresentationHeroBtn = document.getElementById("start-presentation-hero");
+  const viewOutlineBtn = document.getElementById("view-outline");
 
   // --- Config
   const TALK_MINUTES = 30;
 
   // --- State
-  let i = 0;
+  let currentSlideIndex = 0;
   let timerStart = null;
   let timerId = null;
   let touchStartX = null, touchStartY = null;
-  let shortcutsVisible = false;
+  let isPresentationMode = false;
 
   // --- Helpers
   const clamp = n => Math.max(0, Math.min(slides.length - 1, n));
@@ -29,48 +33,83 @@
   const hiddenFrags = (s) => frags(s).filter(f => !f.classList.contains("is-visible"));
   const fmt2 = n => String(n).padStart(2, "0");
 
+  // --- Presentation Mode Functions
+  function enterPresentationMode() {
+    isPresentationMode = true;
+    presentationMode.classList.add("active");
+    document.body.style.overflow = "hidden";
+    setSlide(0);
+    startTimer();
+  }
+
+  function exitPresentationMode() {
+    isPresentationMode = false;
+    presentationMode.classList.remove("active");
+    document.body.style.overflow = "";
+    if (timerId) {
+      clearInterval(timerId);
+      timerId = null;
+    }
+  }
+
   function updateSlideCounter() {
-    slideCounter.textContent = `${i + 1} / ${slides.length}`;
+    if (slideCounter) {
+      slideCounter.textContent = `${currentSlideIndex + 1} / ${slides.length}`;
+    }
   }
 
   function setSlide(newIndex, { fromHash = false } = {}) {
-    i = clamp(newIndex);
-    slides.forEach((s, idx) => {
-      s.style.display = idx === i ? "block" : "none";
-      if (idx === i) requestAnimationFrame(() => s.scrollTo({ top: 0, left: 0, behavior: "instant" }));
+    if (!isPresentationMode) return;
+    
+    currentSlideIndex = clamp(newIndex);
+    
+    // Hide all slides
+    slides.forEach((slide, idx) => {
+      slide.classList.toggle("active", idx === currentSlideIndex);
     });
-    const pct = ((i + 1) / slides.length) * 100;
-    progressBar.style.width = pct + "%";
+    
+    // Update progress bar
+    if (progressBar) {
+      const pct = ((currentSlideIndex + 1) / slides.length) * 100;
+      progressBar.style.width = pct + "%";
+    }
+    
     updateSlideCounter();
     
     // Update button states
-    prevBtn.disabled = i === 0;
-    nextBtn.disabled = i === slides.length - 1;
+    if (prevBtn) prevBtn.disabled = currentSlideIndex === 0;
+    if (nextBtn) nextBtn.disabled = currentSlideIndex === slides.length - 1;
   }
 
   function advance() {
+    if (!isPresentationMode) return;
+    
     if (!timerStart) startTimer();
 
-    const s = slides[i];
-    const nextFrag = hiddenFrags(s)[0];
+    const currentSlide = slides[currentSlideIndex];
+    const nextFrag = hiddenFrags(currentSlide)[0];
     if (nextFrag) {
       nextFrag.classList.add("is-visible");
       return;
     }
-    setSlide(i + 1);
+    setSlide(currentSlideIndex + 1);
   }
 
   function back() {
-    const s = slides[i];
-    const vis = visibleFrags(s);
+    if (!isPresentationMode) return;
+    
+    const currentSlide = slides[currentSlideIndex];
+    const vis = visibleFrags(currentSlide);
     if (vis.length > 0) {
       vis[vis.length - 1].classList.remove("is-visible");
       return;
     }
-    setSlide(i - 1);
+    setSlide(currentSlideIndex - 1);
   }
 
   function goToSlide() {
+    if (!isPresentationMode) return;
+    
     const input = prompt(`Go to slide (1-${slides.length}):`);
     const slideNum = parseInt(input, 10);
     if (!isNaN(slideNum) && slideNum >= 1 && slideNum <= slides.length) {
@@ -78,37 +117,37 @@
     }
   }
 
+  function startTimer() {
+    if (timerStart) return; // Already started
+    
+    timerStart = Date.now();
+    timerId = setInterval(() => {
+      const secs = Math.floor((Date.now() - timerStart) / 1000);
+      if (timerMM) timerMM.textContent = fmt2(Math.floor(secs / 60));
+      if (timerSS) timerSS.textContent = fmt2(secs % 60);
+      if (timerDot) timerDot.style.opacity = (secs % 2) ? "0.35" : "1";
+    }, 500);
+  }
+
+  // --- Theme Functions
   function toggleTheme() {
     const currentTheme = document.documentElement.getAttribute('data-theme');
     const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
     document.documentElement.setAttribute('data-theme', newTheme);
-    themeToggle.setAttribute('data-theme', newTheme);
+    if (themeToggle) themeToggle.setAttribute('data-theme', newTheme);
     localStorage.setItem('presentation-theme', newTheme);
-  }
-
-  function toggleShortcuts() {
-    shortcutsVisible = !shortcutsVisible;
-    shortcutsOverlay.classList.toggle('show', shortcutsVisible);
-  }
-
-  function startTimer() {
-    timerStart = Date.now();
-    timerId = setInterval(() => {
-      const secs = Math.floor((Date.now() - timerStart) / 1000);
-      timerMM.textContent = fmt2(Math.floor(secs / 60));
-      timerSS.textContent = fmt2(secs % 60);
-      timerDot.style.opacity = (secs % 2) ? "0.35" : "1";
-    }, 500);
   }
 
   // --- Touch handlers
   function onTouchStart(e) {
+    if (!isPresentationMode) return;
     const t = e.changedTouches[0];
     touchStartX = t.clientX;
     touchStartY = t.clientY;
   }
 
   function onTouchEnd(e) {
+    if (!isPresentationMode) return;
     const t = e.changedTouches[0];
     const dx = t.clientX - touchStartX;
     const dy = t.clientY - touchStartY;
@@ -118,14 +157,20 @@
     }
   }
 
-  // --- Event listeners
+  // --- Keyboard Event Handler
   window.addEventListener("keydown", (e) => {
     if (["INPUT", "TEXTAREA"].includes(document.activeElement.tagName)) return;
     const k = e.key.toLowerCase();
 
-    if (shortcutsVisible && k !== "?" && k !== "escape") {
-      toggleShortcuts();
+    // Global shortcuts (work in both modes)
+    if (k === "t") {
+      e.preventDefault();
+      toggleTheme();
+      return;
     }
+
+    // Presentation mode shortcuts
+    if (!isPresentationMode) return;
 
     switch (k) {
       case "arrowright":
@@ -141,86 +186,195 @@
         back();
         break;
       case "f":
-        if (!document.fullscreenElement) document.documentElement.requestFullscreen?.();
-        else document.exitFullscreen?.();
-        break;
-      case "t":
-        toggleTheme();
+        e.preventDefault();
+        if (!document.fullscreenElement) {
+          document.documentElement.requestFullscreen?.();
+        } else {
+          document.exitFullscreen?.();
+        }
         break;
       case "g":
+        e.preventDefault();
         goToSlide();
         break;
-      case "?":
-        toggleShortcuts();
-        break;
       case "escape":
-        if (shortcutsVisible) toggleShortcuts();
+        e.preventDefault();
+        exitPresentationMode();
         break;
     }
   });
 
-  // Button event listeners
-  prevBtn.addEventListener('click', back);
-  nextBtn.addEventListener('click', advance);
-  themeToggle.addEventListener('click', toggleTheme);
-  fullscreenBtn.addEventListener('click', () => {
-    if (!document.fullscreenElement) document.documentElement.requestFullscreen?.();
-    else document.exitFullscreen?.();
+  // --- Event Listeners
+  // Brand/Logo click to go back to main page
+  const brandElements = document.querySelectorAll('.brand');
+  brandElements.forEach(brand => {
+    brand.addEventListener('click', (e) => {
+      e.preventDefault();
+      if (isPresentationMode) {
+        exitPresentationMode();
+      }
+      // Scroll to top of main page
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
   });
 
-  // Touch events
+  // Presentation mode buttons
+  if (startPresentationBtn) {
+    startPresentationBtn.addEventListener('click', enterPresentationMode);
+  }
+  
+  if (startPresentationHeroBtn) {
+    startPresentationHeroBtn.addEventListener('click', enterPresentationMode);
+  }
+
+  if (exitPresentationBtn) {
+    exitPresentationBtn.addEventListener('click', exitPresentationMode);
+  }
+
+  // Navigation buttons
+  if (prevBtn) {
+    prevBtn.addEventListener('click', back);
+  }
+  
+  if (nextBtn) {
+    nextBtn.addEventListener('click', advance);
+  }
+
+  // Theme toggle
+  if (themeToggle) {
+    themeToggle.addEventListener('click', toggleTheme);
+  }
+
+  // Fullscreen button
+  if (fullscreenBtn) {
+    fullscreenBtn.addEventListener('click', () => {
+      if (!document.fullscreenElement) {
+        document.documentElement.requestFullscreen?.();
+      } else {
+        document.exitFullscreen?.();
+      }
+    });
+  }
+
+  // View outline button
+  if (viewOutlineBtn) {
+    viewOutlineBtn.addEventListener('click', () => {
+      // Scroll to the "What You'll Learn" section
+      const section = document.querySelector('.section');
+      if (section) {
+        section.scrollIntoView({ behavior: 'smooth' });
+      }
+    });
+  }
+
+  // Touch events (only in presentation mode)
   document.addEventListener("touchstart", onTouchStart, { passive: true });
   document.addEventListener("touchend", onTouchEnd, { passive: true });
 
-  // Close shortcuts overlay when clicking outside
-  document.addEventListener('click', (e) => {
-    if (shortcutsVisible && !shortcutsOverlay.contains(e.target)) {
-      toggleShortcuts();
-    }
-  });
-
-  // --- Initialize
-  slides.forEach(s => frags(s).forEach(f => f.classList.remove("is-visible")));
-  
-  // Load saved theme
-  const savedTheme = localStorage.getItem('presentation-theme') || 'dark';
-  document.documentElement.setAttribute('data-theme', savedTheme);
-  themeToggle.setAttribute('data-theme', savedTheme);
-  
-  // Start with first slide
-  setSlide(0);
-
-  // Keyboard accessibility for slide counter
-  slideCounter.addEventListener('click', goToSlide);
-  slideCounter.style.cursor = 'pointer';
-  slideCounter.title = 'Click to jump to slide';
+  // Slide counter click to jump
+  if (slideCounter) {
+    slideCounter.addEventListener('click', goToSlide);
+    slideCounter.style.cursor = 'pointer';
+    slideCounter.title = 'Click to jump to slide';
+  }
 
   // Prevent context menu on navigation buttons during presentation
   [prevBtn, nextBtn, fullscreenBtn].forEach(btn => {
-    btn.addEventListener('contextmenu', e => e.preventDefault());
+    if (btn) {
+      btn.addEventListener('contextmenu', e => e.preventDefault());
+    }
   });
 
   // Auto-hide cursor during fullscreen presentation
   let cursorTimeout;
   function hideCursor() {
-    document.body.style.cursor = 'none';
+    if (isPresentationMode) {
+      document.body.style.cursor = 'none';
+    }
   }
+  
   function showCursor() {
     document.body.style.cursor = '';
     clearTimeout(cursorTimeout);
-    if (document.fullscreenElement) {
+    if (document.fullscreenElement && isPresentationMode) {
       cursorTimeout = setTimeout(hideCursor, 3000);
     }
   }
 
   document.addEventListener('mousemove', showCursor);
   document.addEventListener('fullscreenchange', () => {
-    if (document.fullscreenElement) {
+    if (document.fullscreenElement && isPresentationMode) {
       cursorTimeout = setTimeout(hideCursor, 3000);
     } else {
       showCursor();
       clearTimeout(cursorTimeout);
     }
+  });
+
+  // --- Initialize
+  // Initialize fragments
+  slides.forEach(slide => {
+    frags(slide).forEach(fragment => {
+      fragment.classList.remove("is-visible");
+    });
+  });
+  
+  // Load saved theme
+  const savedTheme = localStorage.getItem('presentation-theme') || 'dark';
+  document.documentElement.setAttribute('data-theme', savedTheme);
+  if (themeToggle) themeToggle.setAttribute('data-theme', savedTheme);
+  
+  // Initialize first slide as active
+  if (slides.length > 0) {
+    slides[0].classList.add("active");
+  }
+
+  // Add smooth scrolling for anchor links
+  document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener('click', function (e) {
+      e.preventDefault();
+      const target = document.querySelector(this.getAttribute('href'));
+      if (target) {
+        target.scrollIntoView({
+          behavior: 'smooth',
+          block: 'start'
+        });
+      }
+    });
+  });
+
+  // Add intersection observer for scroll animations
+  const observerOptions = {
+    threshold: 0.1,
+    rootMargin: '0px 0px -50px 0px'
+  };
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.style.opacity = '1';
+        entry.target.style.transform = 'translateY(0)';
+      }
+    });
+  }, observerOptions);
+
+  // Observe content items for scroll animations
+  document.querySelectorAll('.content-item').forEach(item => {
+    item.style.opacity = '0';
+    item.style.transform = 'translateY(20px)';
+    item.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+    observer.observe(item);
+  });
+
+  // Add hover effects for interactive elements
+  document.querySelectorAll('.content-item, .btn').forEach(element => {
+    element.addEventListener('mouseenter', function() {
+      this.style.transform = 'translateY(-2px)';
+    });
+    
+    element.addEventListener('mouseleave', function() {
+      this.style.transform = 'translateY(0)';
+    });
   });
 
 })();
