@@ -1,0 +1,564 @@
+<!doctype html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Speaker Notes - Technical Workflows in Game Development</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    /* Mobile-optimized styles for speaker notes */
+    :root {
+      --bg: #0f172a;
+      --bg-soft: #1e293b;
+      --fg: #f1f5f9;
+      --muted: #94a3b8;
+      --accent: #3b82f6;
+      --accent-2: #60a5fa;
+      --card: #1e293b;
+      --border: #334155;
+      --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.3);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      line-height: 1.6;
+      color: var(--fg);
+      background: var(--bg);
+      padding: 1rem;
+      font-size: 14px;
+    }
+
+    .notes-container {
+      max-width: 100%;
+      margin: 0 auto;
+    }
+
+    .notes-header {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 1rem;
+      margin-bottom: 1rem;
+      text-align: center;
+      box-shadow: var(--shadow);
+    }
+
+    .notes-header h1 {
+      font-size: 1.2rem;
+      font-weight: 600;
+      color: var(--accent);
+      margin-bottom: 0.5rem;
+    }
+
+    .notes-header p {
+      font-size: 0.9rem;
+      color: var(--muted);
+    }
+
+    .slide-notes {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 1.5rem;
+      margin-bottom: 1rem;
+      box-shadow: var(--shadow);
+    }
+
+    .slide-notes h2 {
+      font-size: 1.1rem;
+      font-weight: 600;
+      color: var(--accent);
+      margin-bottom: 0.75rem;
+      padding-bottom: 0.5rem;
+      border-bottom: 2px solid var(--accent);
+    }
+
+    .slide-notes h3 {
+      font-size: 1rem;
+      font-weight: 600;
+      color: var(--fg);
+      margin: 1rem 0 0.5rem 0;
+    }
+
+    .slide-notes p {
+      color: var(--muted);
+      margin-bottom: 0.75rem;
+      font-size: 0.9rem;
+      line-height: 1.5;
+    }
+
+    .slide-notes ul {
+      margin: 0.75rem 0;
+      padding-left: 1.5rem;
+    }
+
+    .slide-notes li {
+      color: var(--muted);
+      margin-bottom: 0.5rem;
+      font-size: 0.9rem;
+      line-height: 1.4;
+    }
+
+    .slide-notes blockquote {
+      background: var(--bg-soft);
+      border-left: 4px solid var(--accent);
+      padding: 1rem;
+      margin: 1rem 0;
+      border-radius: 0 8px 8px 0;
+      font-style: italic;
+      color: var(--accent-2);
+    }
+
+    .slide-number {
+      display: inline-block;
+      background: var(--accent);
+      color: white;
+      padding: 0.25rem 0.5rem;
+      border-radius: 6px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      margin-bottom: 0.75rem;
+    }
+
+    .key-points {
+      background: var(--bg-soft);
+      border-radius: 8px;
+      padding: 1rem;
+      margin: 1rem 0;
+    }
+
+    .key-points h4 {
+      color: var(--accent);
+      font-size: 0.9rem;
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+    }
+
+    .key-points ul {
+      margin: 0;
+      padding-left: 1rem;
+    }
+
+    .key-points li {
+      font-size: 0.85rem;
+      margin-bottom: 0.25rem;
+    }
+
+    /* Keep screen awake */
+    body {
+      -webkit-touch-callout: none;
+      -webkit-user-select: none;
+      -khtml-user-select: none;
+      -moz-user-select: none;
+      -ms-user-select: none;
+      user-select: none;
+    }
+
+    /* Auto-refresh every 30 seconds to keep screen awake */
+    @media (prefers-reduced-motion: no-preference) {
+      body {
+        animation: keepAwake 30s infinite;
+      }
+    }
+
+    @keyframes keepAwake {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.999; }
+    }
+  </style>
+</head>
+<body>
+  <div class="notes-container">
+    <!-- Header -->
+    <div class="notes-header">
+      <h1>🎮 Speaker Notes</h1>
+      <p>Technical Workflows in Game Development</p>
+    </div>
+
+    <!-- Slide 1: Cover -->
+    <div class="slide-notes">
+      <div class="slide-number">Slide 1</div>
+      <h2>Cover Slide</h2>
+      <p><strong>Opening:</strong> "Good morning, everyone."</p>
+      <p>Start with energy and confidence. Make eye contact with the audience.</p>
+    </div>
+
+    <!-- Slide 2: Opening -->
+    <div class="slide-notes">
+      <div class="slide-number">Slide 2</div>
+      <h2>Opening</h2>
+      <p><strong>Key Message:</strong> "Game development is one of the most exciting creative industries. We create interactive worlds, characters, and systems that players explore and enjoy."</p>
+      
+      <div class="key-points">
+        <h4>Key Points to Emphasize:</h4>
+        <ul>
+          <li>Interactive worlds and characters</li>
+          <li>Complex disciplines coming together</li>
+          <li>Incredible strength but also risk</li>
+          <li>Workflow problems (build breaks, asset confusion, platform issues)</li>
+        </ul>
+      </div>
+
+      <p><strong>Transition:</strong> "These are not problems of creativity. They are problems of workflow."</p>
+    </div>
+
+    <!-- Slide 3: Key Message -->
+    <div class="slide-notes">
+      <div class="slide-number">Slide 3</div>
+      <h2>Key Message</h2>
+      <blockquote>"Workflows are not bureaucracy. They are survival."</blockquote>
+      
+      <p><strong>Explain:</strong> "They are the invisible systems that let creativity flow without being crushed by disorder."</p>
+      
+      <p><strong>Preview:</strong> "Today, we're going to break down the technical workflows that keep projects healthy. I will walk you through the full pipeline: version control, build automation, asset management, testing, documentation, integration and release, scope management, and finally, technical art workflows."</p>
+    </div>
+
+    <!-- Slide 4: Why Workflows Matter -->
+    <div class="slide-notes">
+      <div class="slide-number">Slide 4</div>
+      <h2>Why Workflows Matter</h2>
+      <p><strong>Opening:</strong> "Game development is unique because of its complexity."</p>
+      
+      <div class="key-points">
+        <h4>Four Essential Things Workflows Give Us:</h4>
+        <ul>
+          <li><strong>Consistency:</strong> Same result every time we repeat a process</li>
+          <li><strong>Traceability:</strong> Record of who changed what and why</li>
+          <li><strong>Collaboration:</strong> Multiple people working in parallel</li>
+          <li><strong>Stability:</strong> Click "Play" and get a working build</li>
+        </ul>
+      </div>
+
+      <p><strong>Closing:</strong> "So when we say workflows matter, we're not talking about process for process' sake. We're talking about survival in a complex, multi-disciplinary environment."</p>
+    </div>
+
+    <!-- Slide 5: Workflow Benefits -->
+    <div class="slide-notes">
+      <div class="slide-number">Slide 5</div>
+      <h2>Workflows Give Us</h2>
+      <p>Expand on each of the four benefits with examples:</p>
+      
+      <h3>Consistency</h3>
+      <p>"If one person exports a texture and it works, but another person exports the same texture and it breaks, that's wasted time. Workflows prevent this."</p>
+      
+      <h3>Traceability</h3>
+      <p>"In game dev, things change constantly. Without a record of who changed what and why, debugging becomes impossible. Workflows provide that history."</p>
+      
+      <h3>Collaboration</h3>
+      <p>"Multiple people need to work at once. An artist, a designer, and a programmer can't wait on each other. Workflows let them move in parallel without stepping on each other's toes."</p>
+      
+      <h3>Stability</h3>
+      <p>"At any moment, you should be able to click 'Play' and get a working build. Workflows enforce that discipline."</p>
+    </div>
+
+    <!-- Slide 6: Source & Version Control -->
+    <div class="slide-notes">
+      <div class="slide-number">Slide 6</div>
+      <h2>1. Source & Version Control</h2>
+      <p><strong>Opening:</strong> "The first building block of any workflow is version control. This is the system that records every change, who made it, and when."</p>
+      
+      <p><strong>Analogy:</strong> "Imagine dozens of people all contributing: artists committing models, designers committing levels, programmers committing code. Without version control, the 'latest' version is always on somebody's local machine. That's chaos. With version control, there's a single source of truth."</p>
+      
+      <div class="key-points">
+        <h4>Key Practices:</h4>
+        <ul>
+          <li>Always use a proper system: Git with Git LFS for large assets, Perforce for AAA-scale projects, or Plastic SCM for Unity-focused pipelines</li>
+          <li>Choose a branching strategy: trunk-based for frequent merges and continuous integration, or feature-branching when isolation is needed</li>
+          <li>Enforce commit messages that capture intent: explain <em>why</em> the change was made, not just <em>what</em> changed</li>
+          <li>Tag builds in version control so that any shipped build can be recreated exactly</li>
+        </ul>
+      </div>
+
+      <p><strong>Closing:</strong> "Version control is not just for safety — it is the enabler of collaboration."</p>
+    </div>
+
+    <!-- Slide 7: Build Pipelines -->
+    <div class="slide-notes">
+      <div class="slide-number">Slide 7</div>
+      <h2>2. Build Pipelines</h2>
+      <p><strong>Opening:</strong> "If version control is the foundation, build pipelines are the machinery built on top of it. They transform source and assets into playable builds."</p>
+      
+      <div class="key-points">
+        <h4>Why They Matter:</h4>
+        <ul>
+          <li>Manual builds are fragile. If they depend on one person knowing the exact steps, the project has a single point of failure</li>
+          <li>Automated builds are reliable. Every change can be validated quickly</li>
+          <li>Teams gain confidence: "if it built on the server, it will run on my machine"</li>
+        </ul>
+      </div>
+
+      <div class="key-points">
+        <h4>Key Practices:</h4>
+        <ul>
+          <li>Tools: Unity Cloud Build, Unreal Automation Tool (UAT), Jenkins, GitHub Actions, Azure Pipelines</li>
+          <li>Trigger builds automatically when commits are pushed or branches merged</li>
+          <li>Integrate automated smoke tests: does the game launch, load, and run a basic scene?</li>
+          <li>Archive artifacts: every build gets stored with its version, commit hash, and date. Rollback is always possible</li>
+        </ul>
+      </div>
+
+      <p><strong>Closing:</strong> "Build pipelines make development continuous. They remove friction, detect issues early, and keep the project always playable."</p>
+    </div>
+
+    <!-- Slide 8: Asset Management -->
+    <div class="slide-notes">
+      <div class="slide-number">Slide 8</div>
+      <h2>3. Asset Management</h2>
+      <p><strong>Opening:</strong> "Games are asset-heavy. 3D models, textures, animations, sounds, UI, shaders. Without rules, this turns into chaos fast."</p>
+      
+      <div class="key-points">
+        <h4>Why It Matters:</h4>
+        <ul>
+          <li>Assets are large and numerous. Without consistent naming, multiple versions creep in</li>
+          <li>Inconsistent scale, pivots, or materials create endless bugs</li>
+          <li>Large assets can break repositories or balloon builds</li>
+        </ul>
+      </div>
+
+      <div class="key-points">
+        <h4>Key Practices:</h4>
+        <ul>
+          <li>Establish strict naming conventions: e.g., <code>CHAR_Hero_Idle_v001.fbx</code></li>
+          <li>Organize folder structures clearly: Characters, Environments, Audio, VFX</li>
+          <li>Manage large files responsibly: Git LFS, Perforce depots, or asset servers</li>
+          <li>Automate imports: Unity's AssetPostprocessor or Unreal's reimport rules enforce consistency at import</li>
+        </ul>
+      </div>
+
+      <h3>Engine-Specific:</h3>
+      <p><strong>Unity:</strong> use Import Presets for textures and models; postprocessor scripts to fix scale and assign materials.</p>
+      <p><strong>Unreal:</strong> enforce skeletons, compression, and LODs with import rules; use Derived Data Cache to speed iteration.</p>
+
+      <p><strong>Closing:</strong> "Asset workflows ensure that creative output is usable, consistent, and optimized."</p>
+    </div>
+
+    <!-- Slide 9: Testing Workflows -->
+    <div class="slide-notes">
+      <div class="slide-number">Slide 9</div>
+      <h2>4. Testing Workflows</h2>
+      <p><strong>Opening:</strong> "Games are complex systems where one small change can break ten other things. Testing workflows protect against regression."</p>
+      
+      <div class="key-points">
+        <h4>Why They Matter:</h4>
+        <ul>
+          <li>They maintain confidence that builds remain stable</li>
+          <li>They reduce the cost of fixing bugs by catching them early</li>
+        </ul>
+      </div>
+
+      <div class="key-points">
+        <h4>Key Practices:</h4>
+        <ul>
+          <li>Unit tests: check small, isolated systems</li>
+          <li>Integration tests: validate subsystems working together</li>
+          <li>Smoke tests: confirm the game launches and loads levels</li>
+          <li>Performance tests: measure FPS, memory, load times on target hardware</li>
+        </ul>
+      </div>
+
+      <p><strong>Closing:</strong> "When integrated with pipelines, testing workflows mean stability is continuous, not occasional."</p>
+    </div>
+
+    <!-- Slide 10: Documentation & Communication -->
+    <div class="slide-notes">
+      <div class="slide-number">Slide 10</div>
+      <h2>5. Documentation & Communication</h2>
+      <p><strong>Opening:</strong> "Workflows only matter if they are known and followed. That requires documentation and communication."</p>
+      
+      <div class="key-points">
+        <h4>Why They Matter:</h4>
+        <ul>
+          <li>Without documentation, knowledge is siloed and disappears when people leave</li>
+          <li>Without communication, teams drift, and integration suffers</li>
+        </ul>
+      </div>
+
+      <div class="key-points">
+        <h4>Key Practices:</h4>
+        <ul>
+          <li>Keep documentation lightweight but reliable. Tools: Notion, Confluence, HacknPlan</li>
+          <li>Document <em>why</em> as well as <em>how</em>. The reasoning matters</li>
+          <li>Connect repositories and build pipelines to Slack or Discord so everyone sees build statuses</li>
+          <li>Auto-generate release notes and changelogs directly from commits</li>
+        </ul>
+      </div>
+
+      <p><strong>Closing:</strong> "Documentation and communication workflows ensure knowledge is shared, aligned, and accessible."</p>
+    </div>
+
+    <!-- Slide 11: Integration & Release -->
+    <div class="slide-notes">
+      <div class="slide-number">Slide 11</div>
+      <h2>6. Integration & Release Workflow</h2>
+      <p><strong>Opening:</strong> "Release is when workflows are tested most. Without strong workflows, it's chaos. With them, it's routine."</p>
+      
+      <div class="key-points">
+        <h4>Why They Matter:</h4>
+        <ul>
+          <li>Release is high-risk: deadlines, visibility, and expectations</li>
+          <li>Workflows reduce stress and increase confidence</li>
+        </ul>
+      </div>
+
+      <div class="key-points">
+        <h4>Key Practices:</h4>
+        <ul>
+          <li>Feature flags: incomplete features can be merged without breaking the build</li>
+          <li>Release checklists: freeze, validate, package, distribute</li>
+          <li>Daily integration builds: reduce merge conflicts</li>
+          <li>Archive builds and configs for rollback</li>
+        </ul>
+      </div>
+
+      <p><strong>Closing:</strong> "With release workflows, shipping becomes predictable instead of terrifying."</p>
+    </div>
+
+    <!-- Slide 12: Scope & Vertical Slice -->
+    <div class="slide-notes">
+      <div class="slide-number">Slide 12</div>
+      <h2>7. Scope & Vertical Slice Workflow</h2>
+      <p><strong>Opening:</strong> "Scope kills projects more than anything else. That's why we manage it with vertical slices."</p>
+      
+      <div class="key-points">
+        <h4>Why It Matters:</h4>
+        <ul>
+          <li>Ambition without discipline leads to unfinished projects</li>
+          <li>A vertical slice proves feasibility and validates pipelines</li>
+        </ul>
+      </div>
+
+      <div class="key-points">
+        <h4>Key Practices:</h4>
+        <ul>
+          <li>Build a vertical slice early: one complete piece with gameplay, art, audio, and UI</li>
+          <li>Use milestone stages: prototype → vertical slice → alpha → beta → launch</li>
+          <li>Defer non-critical features until the slice is validated</li>
+        </ul>
+      </div>
+
+      <p><strong>Closing:</strong> "Scope workflows ensure we finish projects instead of drowning in ambition."</p>
+    </div>
+
+    <!-- Slide 13: Technical Art Workflows -->
+    <div class="slide-notes">
+      <div class="slide-number">Slide 13</div>
+      <h2>8. Technical Art Workflows</h2>
+      <p><strong>Opening:</strong> "Technical art bridges art and engineering. It is where performance, visuals, and scalability meet."</p>
+      
+      <div class="key-points">
+        <h4>Why It Matters:</h4>
+        <ul>
+          <li>Without technical art workflows, games suffer from bloated builds and poor performance</li>
+        </ul>
+      </div>
+
+      <div class="key-points">
+        <h4>Key Practices:</h4>
+        <ul>
+          <li>Shader libraries: shared, optimized shaders for consistency</li>
+          <li>LOD pipelines: automate creation and validation of LODs</li>
+          <li>Optimization budgets: polycount, texture resolution, draw calls</li>
+          <li>Asset validation: automated checks for pivots, scales, UVs, metrics</li>
+        </ul>
+      </div>
+
+      <p><strong>Closing:</strong> "Technical art workflows keep the game efficient, scalable, and visually consistent."</p>
+    </div>
+
+    <!-- Slide 14: Future of Workflows -->
+    <div class="slide-notes">
+      <div class="slide-number">Slide 14</div>
+      <h2>Future of Workflows</h2>
+      <p><strong>Opening:</strong> "Looking forward, workflows are evolving:"</p>
+      
+      <div class="key-points">
+        <h4>Emerging Trends:</h4>
+        <ul>
+          <li>AI-driven pipelines: bots running QA tests, tagging assets, triaging bugs</li>
+          <li>Cloud-native development: entire studios running in cloud editors, no heavy local hardware</li>
+          <li>Procedural workflows: automated validation and curation for endless or dynamic content</li>
+        </ul>
+      </div>
+
+      <p><strong>Closing:</strong> "The direction is clear: workflows will become more intelligent, invisible, and essential."</p>
+    </div>
+
+    <!-- Slide 15: Closing -->
+    <div class="slide-notes">
+      <div class="slide-number">Slide 15</div>
+      <h2>Closing</h2>
+      <p><strong>Opening:</strong> "Workflows are the backbone of game development. They transform chaos into order, ambition into shipped projects."</p>
+      
+      <div class="key-points">
+        <h4>Key Messages:</h4>
+        <ul>
+          <li>They are not bureaucracy; they are the systems that protect creativity</li>
+          <li>Every team — from a jam to a AAA studio — depends on them</li>
+          <li>The stronger the workflows, the greater the chance of success</li>
+        </ul>
+      </div>
+
+      <p><strong>Final Question:</strong> "So as you continue your projects, remember to ask: <em>what workflows will carry us to the finish line?</em> Because in the end, workflows are the difference between endless prototypes and playable games."</p>
+    </div>
+
+    <!-- Slide 16: Final Message -->
+    <div class="slide-notes">
+      <div class="slide-number">Slide 16</div>
+      <h2>Final Question</h2>
+      <blockquote>"What workflows will carry us to the finish line?"</blockquote>
+      <p><strong>Closing:</strong> "The difference between endless prototypes and playable games."</p>
+      
+      <p><strong>Pause. Smile. Thank the audience.</strong></p>
+    </div>
+
+    <!-- Slide 17: Thank You -->
+    <div class="slide-notes">
+      <div class="slide-number">Slide 17</div>
+      <h2>Thank You!</h2>
+      <p><strong>Final Message:</strong> "Questions & Discussion"</p>
+      <p>Be ready for Q&A. Common questions might include:</p>
+      <ul>
+        <li>How to implement workflows in small teams</li>
+        <li>Cost vs. benefit of automation</li>
+        <li>Tools recommendations for different team sizes</li>
+        <li>How to convince management to invest in workflows</li>
+      </ul>
+    </div>
+
+  </div>
+
+  <script>
+    // Keep screen awake and add some interactivity
+    document.addEventListener('DOMContentLoaded', function() {
+      // Prevent screen from sleeping
+      if ('wakeLock' in navigator) {
+        navigator.wakeLock.request('screen');
+      }
+      
+      // Add tap to scroll to top
+      document.querySelector('.notes-header').addEventListener('click', function() {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      });
+      
+      // Add slide number highlighting
+      const slideNumbers = document.querySelectorAll('.slide-number');
+      slideNumbers.forEach((num, index) => {
+        num.addEventListener('click', function() {
+          // Remove active class from all
+          slideNumbers.forEach(n => n.style.background = 'var(--accent)');
+          // Add active class to clicked
+          this.style.background = 'var(--accent-2)';
+        });
+      });
+    });
+  </script>
+</body>
+</html>
