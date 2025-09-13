@@ -3,9 +3,6 @@
   const presentationMode = document.getElementById("presentation-mode");
   const slides = Array.from(document.querySelectorAll(".slide"));
   const progressBar = document.getElementById("progress-bar");
-  const timerMM = document.getElementById("timer-mm");
-  const timerSS = document.getElementById("timer-ss");
-  const timerDot = document.getElementById("timer-dot");
   const slideCounter = document.getElementById("slide-counter");
   const themeToggle = document.getElementById("theme-toggle");
   const prevBtn = document.getElementById("prev-btn");
@@ -16,13 +13,8 @@
   const startPresentationHeroBtn = document.getElementById("start-presentation-hero");
   const viewOutlineBtn = document.getElementById("view-outline");
 
-  // --- Config
-  const TALK_MINUTES = 30;
-
   // --- State
   let currentSlideIndex = 0;
-  let timerStart = null;
-  let timerId = null;
   let touchStartX = null, touchStartY = null;
   let isPresentationMode = false;
 
@@ -39,17 +31,12 @@
     presentationMode.classList.add("active");
     document.body.style.overflow = "hidden";
     setSlide(0);
-    startTimer();
   }
 
   function exitPresentationMode() {
     isPresentationMode = false;
     presentationMode.classList.remove("active");
     document.body.style.overflow = "";
-    if (timerId) {
-      clearInterval(timerId);
-      timerId = null;
-    }
   }
 
   function updateSlideCounter() {
@@ -84,8 +71,6 @@
   function advance() {
     if (!isPresentationMode) return;
     
-    if (!timerStart) startTimer();
-
     const currentSlide = slides[currentSlideIndex];
     const nextFrag = hiddenFrags(currentSlide)[0];
     if (nextFrag) {
@@ -117,17 +102,6 @@
     }
   }
 
-  function startTimer() {
-    if (timerStart) return; // Already started
-    
-    timerStart = Date.now();
-    timerId = setInterval(() => {
-      const secs = Math.floor((Date.now() - timerStart) / 1000);
-      if (timerMM) timerMM.textContent = fmt2(Math.floor(secs / 60));
-      if (timerSS) timerSS.textContent = fmt2(secs % 60);
-      if (timerDot) timerDot.style.opacity = (secs % 2) ? "0.35" : "1";
-    }, 500);
-  }
 
   // --- Theme Functions
   function toggleTheme() {

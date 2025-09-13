@@ -106,13 +106,46 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
+  position: relative;
+  overflow: hidden;
+  transition: all 0.3s ease;
 }
 
 .brand__mark::before {
-  content: 'T';
-  color: white;
-  font-size: 14px;
-  font-weight: 600;
+  content: '🎮';
+  font-size: 16px;
+  transition: all 0.3s ease;
+}
+
+.brand__mark::after {
+  content: '';
+  position: absolute;
+  top: -2px;
+  left: -2px;
+  right: -2px;
+  bottom: -2px;
+  background: linear-gradient(45deg, #00ff00, #00ffff, #ff00ff, #ff0000, #ffff00, #00ff00);
+  background-size: 400% 400%;
+  border-radius: 8px;
+  opacity: 0;
+  z-index: -1;
+  animation: controllerGlow 3s ease-in-out infinite;
+  transition: opacity 0.3s ease;
+}
+
+.brand:hover .brand__mark::after {
+  opacity: 0.8;
+}
+
+.brand:hover .brand__mark {
+  transform: scale(1.1);
+  box-shadow: 0 0 20px rgba(0, 255, 0, 0.5);
+}
+
+@keyframes controllerGlow {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
 }
 
 .header-actions {
@@ -203,10 +236,26 @@ body {
 
 /* ---------- HERO SECTION ---------- */
 .hero {
-  padding: 6rem 0 4rem;
+  padding: 8rem 0 6rem;
   text-align: center;
   background: linear-gradient(135deg, var(--bg) 0%, var(--bg-soft) 100%);
   position: relative;
+  overflow: hidden;
+  min-height: 66.67vh; /* 2/3 of viewport height */
+}
+
+.hero::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: 
+    radial-gradient(circle at 20% 80%, rgba(255, 107, 107, 0.1) 0%, transparent 50%),
+    radial-gradient(circle at 80% 20%, rgba(78, 205, 196, 0.1) 0%, transparent 50%),
+    radial-gradient(circle at 40% 40%, rgba(69, 183, 209, 0.1) 0%, transparent 50%);
+  pointer-events: none;
 }
 
 .hero::after {
@@ -222,21 +271,28 @@ body {
 }
 
 .hero h1 {
-  font-size: 3.5rem;
+  font-size: 5rem;
   font-weight: 800;
   line-height: 1.1;
-  margin-bottom: 1rem;
+  margin-bottom: 2rem;
   background: linear-gradient(135deg, var(--accent) 0%, var(--accent-2) 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
+  max-width: 66.67%; /* 2/3 of container width */
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .hero p {
-  font-size: 1.5rem;
+  font-size: 2.2rem;
   color: var(--muted);
-  margin-bottom: 2.5rem;
+  margin-bottom: 4rem;
   font-weight: 300;
+  line-height: 1.4;
+  max-width: 50%; /* 1/2 of container width for better balance */
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .hero-actions {
@@ -248,48 +304,60 @@ body {
 
 /* ---------- SECTIONS ---------- */
 .section {
-  padding: 5rem 0;
+  padding: 6rem 0;
+  max-width: 1200px;
+  margin: 0 auto;
+  width: 100%;
 }
 
 .section h2 {
-  font-size: 2.5rem;
+  font-size: 4rem;
   font-weight: 700;
-  margin-bottom: 3rem;
+  margin-bottom: 5rem;
   text-align: center;
   position: relative;
   display: inline-block;
   width: 100%;
+  line-height: 1.2;
+  max-width: 75%; /* 3/4 of container width */
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .section h2::after {
   content: '';
   position: absolute;
-  bottom: -0.5rem;
+  bottom: -1rem;
   left: 50%;
   transform: translateX(-50%);
-  width: 60px;
-  height: 4px;
+  width: 80px;
+  height: 6px;
   background: linear-gradient(135deg, var(--accent) 0%, var(--accent-2) 100%);
-  border-radius: 2px;
+  border-radius: 3px;
 }
 
 /* ---------- CONTENT GRID ---------- */
 .content-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-  gap: 2rem;
-  margin-top: 2rem;
+  grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+  gap: 4rem;
+  margin-top: 4rem;
+  max-width: 90%; /* 9/10 of container width for better balance */
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .content-item {
   background: var(--card);
   border: 1px solid var(--border);
   border-radius: var(--border-radius-lg);
-  padding: 2.5rem;
+  padding: 3.5rem;
   transition: var(--transition);
   position: relative;
   overflow: hidden;
   text-align: left;
+  box-shadow: var(--shadow);
+  min-height: 33.33vh; /* 1/3 of viewport height for consistent proportions */
 }
 
 .content-item::before {
@@ -298,15 +366,15 @@ body {
   top: 0;
   left: 0;
   right: 0;
-  height: 4px;
+  height: 6px;
   background: linear-gradient(135deg, var(--accent) 0%, var(--accent-2) 100%);
   transform: scaleX(0);
   transition: var(--transition);
 }
 
 .content-item:hover {
-  transform: translateY(-4px);
-  box-shadow: var(--shadow-lg);
+  transform: translateY(-8px) scale(1.02);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15), 0 0 0 1px var(--accent);
   border-color: var(--accent);
 }
 
@@ -315,29 +383,58 @@ body {
 }
 
 .slide-icon {
-  width: 56px;
-  height: 56px;
-  border-radius: var(--border-radius);
+  width: 140px;
+  height: 140px;
+  border-radius: 24px;
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-bottom: 1.5rem;
-  font-size: 1.75rem;
-  background: linear-gradient(135deg, var(--accent) 0%, var(--accent-2) 100%);
+  margin-bottom: 3.5rem;
+  font-size: 4.5rem;
+  background: linear-gradient(135deg, #ff6b6b 0%, #4ecdc4 50%, #45b7d1 100%);
   color: white;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3), 0 0 0 4px rgba(255, 255, 255, 0.1);
+  border: 3px solid rgba(255, 255, 255, 0.2);
+  position: relative;
+  overflow: hidden;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.slide-icon::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+  transform: rotate(45deg);
+  animation: shimmer 3s infinite;
+}
+
+@keyframes shimmer {
+  0% { transform: translateX(-100%) translateY(-100%) rotate(45deg); }
+  100% { transform: translateX(100%) translateY(100%) rotate(45deg); }
 }
 
 .content-item h3 {
-  font-size: 1.375rem;
+  font-size: 2rem;
   font-weight: 600;
-  margin-bottom: 1rem;
+  margin-bottom: 2rem;
   color: var(--fg);
+  line-height: 1.3;
+  text-align: center;
 }
 
 .content-item p {
   color: var(--muted);
   line-height: 1.6;
-  font-size: 1rem;
+  font-size: 1.3rem;
+  text-align: center;
+  max-width: 85%; /* Better text width for readability */
+  margin-left: auto;
+  margin-right: auto;
 }
 
 /* ---------- ABOUT SECTION ---------- */
@@ -347,17 +444,17 @@ body {
 }
 
 .section:last-of-type .content-item {
-  max-width: 800px;
+  max-width: 900px;
   margin: 0 auto;
   text-align: center;
-  padding: 3rem;
+  padding: 4rem;
 }
 
 .text-muted {
-  font-size: 1.2rem;
+  font-size: 1.5rem;
   line-height: 1.7;
   color: var(--muted);
-  margin-bottom: 2.5rem;
+  margin-bottom: 3rem;
   text-align: left;
 }
 
@@ -365,13 +462,13 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 1.5rem;
-  padding: 2rem;
+  gap: 2rem;
+  padding: 2.5rem;
   background: var(--bg-soft);
   border: 1px solid var(--border);
   border-radius: var(--border-radius);
-  margin-top: 2rem;
-  font-size: 1.1rem;
+  margin-top: 3rem;
+  font-size: 1.3rem;
 }
 
 .meta strong {
@@ -379,18 +476,55 @@ body {
   font-weight: 600;
 }
 
+.meta a {
+  color: var(--accent);
+  text-decoration: none;
+  font-weight: 500;
+  transition: var(--transition);
+}
+
+.meta a:hover {
+  color: var(--accent-2);
+  text-decoration: underline;
+}
+
+.footer-content a {
+  color: var(--accent);
+  text-decoration: none;
+  font-weight: 500;
+  transition: var(--transition);
+}
+
+.footer-content a:hover {
+  color: var(--accent-2);
+  text-decoration: underline;
+}
+
+.slide .content-item a {
+  color: var(--accent);
+  text-decoration: none;
+  font-weight: 500;
+  transition: var(--transition);
+}
+
+.slide .content-item a:hover {
+  color: var(--accent-2);
+  text-decoration: underline;
+}
+
 /* ---------- FOOTER ---------- */
 .footer {
   background: var(--card);
   border-top: 1px solid var(--border);
-  padding: 2rem 0;
+  padding: 3rem 0;
   text-align: center;
   margin-top: auto;
 }
 
 .footer-content {
   color: var(--muted);
-  font-size: 0.9rem;
+  font-size: 1.1rem;
+  line-height: 1.6;
 }
 
 /* ---------- PRESENTATION MODE ---------- */
@@ -453,14 +587,6 @@ body {
   gap: 1rem;
 }
 
-.timer {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  font-family: 'Monaco', 'Menlo', monospace;
-  font-size: 0.9rem;
-  color: var(--muted);
-}
 
 /* ---------- PRESENTATION CONTENT ---------- */
 .slides-container {
@@ -494,68 +620,118 @@ body {
 }
 
 .slide h1 {
-  font-size: 2.5rem;
+  font-size: 5rem;
   font-weight: 800;
-  margin-bottom: 1.5rem;
+  margin-bottom: 3rem;
   background: linear-gradient(135deg, var(--accent) 0%, var(--accent-2) 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
+  line-height: 1.1;
+  max-width: 80%; /* 4/5 of container width for better balance */
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .slide h2 {
-  font-size: 1.5rem;
-  font-weight: 600;
-  margin-bottom: 1.5rem;
-  color: var(--muted);
-  font-weight: 400;
+  font-size: 3rem;
+  font-weight: 700;
+  margin-bottom: 2.5rem;
+  color: var(--fg);
+  line-height: 1.2;
+  max-width: 75%; /* 3/4 of container width */
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .slide p {
-  font-size: 1.1rem;
+  font-size: 1.7rem;
   color: var(--muted);
   line-height: 1.6;
-  margin-bottom: 1.5rem;
+  margin-bottom: 2.5rem;
+  max-width: 70%; /* 7/10 of container width for optimal readability */
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .slide .subtitle {
-  font-size: 1.2rem;
+  font-size: 2rem;
   color: var(--muted);
-  margin-bottom: 2rem;
+  margin-bottom: 3.5rem;
   font-weight: 300;
+  line-height: 1.4;
+  max-width: 65%; /* 2/3 of container width */
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .slide .meta {
-  font-size: 0.9rem;
+  font-size: 1.2rem;
   color: var(--muted);
-  margin-bottom: 1rem;
+  margin-bottom: 1.5rem;
 }
 
 .slide .hint {
-  font-size: 0.8rem;
+  font-size: 1rem;
   color: var(--muted);
   opacity: 0.7;
   margin-bottom: 0;
+}
+
+.slide blockquote {
+  font-size: 2.5rem;
+  font-style: italic;
+  margin: 3rem 0;
+  color: var(--accent);
+  font-weight: 600;
+  line-height: 1.3;
+  text-align: center;
+  position: relative;
+  padding: 0 2rem;
+}
+
+.slide blockquote::before {
+  content: '"';
+  font-size: 4rem;
+  color: var(--accent-2);
+  position: absolute;
+  left: -0.5rem;
+  top: -1rem;
+  opacity: 0.3;
+}
+
+.slide blockquote::after {
+  content: '"';
+  font-size: 4rem;
+  color: var(--accent-2);
+  position: absolute;
+  right: -0.5rem;
+  bottom: -2rem;
+  opacity: 0.3;
 }
 
 /* ---------- PRESENTATION SLIDE GRID ---------- */
 .slide .content-grid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  gap: 1rem;
+  gap: 3rem;
   width: 100%;
-  max-width: 600px;
-  margin-top: 1rem;
+  max-width: 85%; /* 17/20 of container width for better balance */
+  margin-top: 3rem;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .slide .content-item {
   background: var(--bg-soft);
   border: 1px solid var(--border);
   border-radius: var(--border-radius);
-  padding: 1.25rem;
+  padding: 2.5rem;
   text-align: left;
   position: relative;
   transition: var(--transition);
+  box-shadow: var(--shadow);
+  min-height: 25vh; /* 1/4 of viewport height for consistent proportions */
 }
 
 .slide .content-item::before {
@@ -564,23 +740,24 @@ body {
   top: 0;
   left: 0;
   right: 0;
-  height: 3px;
+  height: 4px;
   background: var(--accent);
   border-radius: var(--border-radius) var(--border-radius) 0 0;
 }
 
 .slide .content-item h3 {
-  font-size: 1rem;
+  font-size: 1.4rem;
   font-weight: 600;
-  margin-bottom: 0.5rem;
+  margin-bottom: 0.75rem;
   color: var(--fg);
+  line-height: 1.3;
 }
 
 .slide .content-item p {
-  font-size: 0.9rem;
+  font-size: 1.1rem;
   color: var(--muted);
   margin: 0;
-  line-height: 1.4;
+  line-height: 1.5;
 }
 
 /* ---------- PRESENTATION CARDS ---------- */
@@ -658,40 +835,62 @@ body {
   }
   
   .hero {
-    padding: 4rem 0 3rem;
+    padding: 5rem 0 4rem;
+    min-height: 50vh; /* Maintain proportional height on mobile */
   }
   
   .hero h1 {
-    font-size: 2.5rem;
+    font-size: 3.5rem;
+    max-width: 90%; /* More width on mobile */
   }
   
   .hero p {
-    font-size: 1.25rem;
+    font-size: 1.6rem;
+    max-width: 80%; /* More width on mobile */
   }
   
   .section {
-    padding: 3rem 0;
+    padding: 4rem 0;
   }
   
   .section h2 {
-    font-size: 2rem;
+    font-size: 2.8rem;
+    max-width: 90%; /* More width on mobile */
   }
   
   .content-grid {
     grid-template-columns: 1fr;
-    gap: 1.5rem;
+    gap: 3rem;
+    max-width: 95%; /* More width on mobile */
   }
   
   .content-item {
-    padding: 2rem;
+    padding: 2.5rem;
+    min-height: 25vh; /* Maintain proportional height on mobile */
   }
   
   .section:last-of-type .content-item {
-    padding: 2rem;
+    padding: 3rem;
   }
   
   .text-muted {
+    font-size: 1.3rem;
+  }
+  
+  .content-item h3 {
+    font-size: 1.5rem;
+    max-width: 90%; /* More width on mobile */
+  }
+  
+  .content-item p {
     font-size: 1.1rem;
+    max-width: 90%; /* More width on mobile */
+  }
+  
+  .slide-icon {
+    width: 100px;
+    height: 100px;
+    font-size: 3rem;
   }
   
   .hero-actions {
@@ -715,32 +914,52 @@ body {
   }
   
   .slide h1 {
-    font-size: 2rem;
+    font-size: 3rem;
+    max-width: 90%; /* More width on mobile */
   }
   
   .slide h2 {
-    font-size: 1.25rem;
+    font-size: 2rem;
+    max-width: 90%; /* More width on mobile */
   }
   
   .slide p {
-    font-size: 1rem;
+    font-size: 1.2rem;
+    max-width: 85%; /* More width on mobile */
+  }
+  
+  .slide .subtitle {
+    font-size: 1.4rem;
+    max-width: 85%; /* More width on mobile */
+  }
+  
+  .slide blockquote {
+    font-size: 2rem;
   }
   
   .slide .content-grid {
     grid-template-columns: 1fr;
-    gap: 0.75rem;
+    gap: 2rem;
+    max-width: 95%; /* More width on mobile */
   }
   
   .slide .content-item {
-    padding: 1rem;
+    padding: 1.5rem;
+    min-height: 20vh; /* Maintain proportional height on mobile */
   }
   
   .slide .content-item h3 {
-    font-size: 0.95rem;
+    font-size: 1.2rem;
   }
   
   .slide .content-item p {
-    font-size: 0.85rem;
+    font-size: 1rem;
+  }
+  
+  .slide-icon {
+    width: 60px;
+    height: 60px;
+    font-size: 2rem;
   }
   
   .presentation-cards {
@@ -763,6 +982,7 @@ body {
 @media (max-width: 480px) {
   .hero {
     padding: 3rem 0 2rem;
+    min-height: 40vh; /* Maintain proportional height on small mobile */
   }
   
   .section {
@@ -770,25 +990,47 @@ body {
   }
   
   .hero h1 {
-    font-size: 2rem;
+    font-size: 2.8rem;
+    max-width: 95%; /* Maximum width on small mobile */
+  }
+  
+  .hero p {
+    font-size: 1.4rem;
+    max-width: 90%; /* Maximum width on small mobile */
   }
   
   .section h2 {
-    font-size: 1.75rem;
+    font-size: 2.2rem;
+    max-width: 95%; /* Maximum width on small mobile */
   }
   
   .content-item {
-    padding: 1.5rem;
+    padding: 2rem;
+    min-height: 20vh; /* Maintain proportional height on small mobile */
   }
   
   .section:last-of-type .content-item {
-    padding: 1.5rem;
+    padding: 2.5rem;
+  }
+  
+  .text-muted {
+    font-size: 1.2rem;
+  }
+  
+  .content-item h3 {
+    font-size: 1.3rem;
+    max-width: 95%; /* Maximum width on small mobile */
+  }
+  
+  .content-item p {
+    font-size: 1rem;
+    max-width: 95%; /* Maximum width on small mobile */
   }
   
   .slide-icon {
-    width: 48px;
-    height: 48px;
-    font-size: 1.5rem;
+    width: 90px;
+    height: 90px;
+    font-size: 2.5rem;
   }
   
   .meta {
@@ -797,27 +1039,49 @@ body {
   }
   
   .slide h1 {
-    font-size: 1.75rem;
+    font-size: 2.5rem;
+    max-width: 95%; /* Maximum width on small mobile */
   }
   
   .slide h2 {
+    font-size: 1.6rem;
+    max-width: 95%; /* Maximum width on small mobile */
+  }
+  
+  .slide p {
     font-size: 1.1rem;
+    max-width: 90%; /* Maximum width on small mobile */
+  }
+  
+  .slide .subtitle {
+    font-size: 1.2rem;
+    max-width: 90%; /* Maximum width on small mobile */
+  }
+  
+  .slide blockquote {
+    font-size: 1.6rem;
   }
   
   .slide .content-grid {
-    gap: 0.5rem;
+    gap: 1rem;
   }
   
   .slide .content-item {
-    padding: 0.75rem;
+    padding: 1.25rem;
   }
   
   .slide .content-item h3 {
-    font-size: 0.9rem;
+    font-size: 1.1rem;
   }
   
   .slide .content-item p {
-    font-size: 0.8rem;
+    font-size: 0.95rem;
+  }
+  
+  .slide-icon {
+    width: 50px;
+    height: 50px;
+    font-size: 1.75rem;
   }
   
   .presentation-cards {
