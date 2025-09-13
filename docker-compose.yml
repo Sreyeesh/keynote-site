@@ -9,3 +9,13 @@ services:
       interval: 10s
       timeout: 3s
       retries: 5
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.keynote.rule=Host(`localhost`)"
+    command: >
+      sh -c "
+      echo ' Keynote site is running!';
+      echo '📱 Access it at: http://localhost:8080';
+      echo ' Mobile navigation available on small screens';
+      nginx -g 'daemon off;'
+      "
