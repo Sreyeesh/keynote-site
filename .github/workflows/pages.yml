@@ -1,9 +1,8 @@
-# .github/workflows/pages.yml
 name: Deploy to GitHub Pages
 
 on:
   push:
-    branches: [ master ]
+    branches: [ main, master ]
 
 permissions:
   contents: read
@@ -15,20 +14,42 @@ concurrency:
   cancel-in-progress: false
 
 jobs:
-  deploy:
+  build-and-deploy:
+    runs-on: ubuntu-latest
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
-    runs-on: ubuntu-latest
+    
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-      - name: Setup Pages
-        uses: actions/configure-pages@v4
-      - name: Upload artifact
-        uses: actions/upload-pages-artifact@v3
-        with:
-          path: '.'
-      - name: Deploy to GitHub Pages
-        id: deployment
-        uses: actions/deploy-pages@v4
+    - name: Checkout code
+      uses: actions/checkout@v4
+      
+    - name: Set up Docker Buildx
+      uses: docker/setup-buildx-action@v3
+      
+    - name: Build Docker image
+      run: |
+        docker build -t keynote-site .
+        
+    - name: Extract static files from Docker container
+      run: |
+        # Create a temporary container
+        docker create --name temp-container keynote-site
+        
+        # Copy files from container to current directory
+        docker cp temp-container:/usr/share/nginx/html/. ./dist/
+        
+        # Clean up
+        docker rm temp-container
+        
+    - name: Setup Pages
+      uses: actions/configure-pages@v4
+      
+    - name: Upload artifact
+      uses: actions/upload-pages-artifact@v3
+      with:
+        path: './dist'
+        
+    - name: Deploy to GitHub Pages
+      id: deployment
+      uses: actions/deploy-pages@v4
