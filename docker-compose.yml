@@ -2,10 +2,10 @@ services:
   web:
     build: .
     ports:
-      - "8080:80"
+      - "8081:80"
     restart: unless-stopped
     healthcheck:
-      test: ["CMD-SHELL", "wget -qO- http://localhost/health.txt || exit 1"]
+      test: ["CMD-SHELL", "test -f /usr/share/nginx/html/health.txt"]
       interval: 10s
       timeout: 3s
       retries: 5
@@ -15,7 +15,7 @@ services:
     command: >
       sh -c "
       echo ' Keynote site is running!';
-      echo '📱 Access it at: http://localhost:8080';
+      echo '📱 Access it at: http://localhost:8081';
       echo ' Mobile navigation available on small screens';
       nginx -g 'daemon off;'
       "
