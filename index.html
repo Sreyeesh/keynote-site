@@ -3,12 +3,12 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Technical Workflows in Game Development — Creative Keynote</title>
+  <title>Workflows — Creative Keynote</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="./styles.css" />
-  <meta name="description" content="A modern, interactive presentation on technical workflows in game development">
+  <meta name="description" content="A modern, interactive presentation on workflows">
   <meta name="author" content="Sreyeesh Garimella">
 </head>
 <body>
@@ -18,8 +18,17 @@
       <div class="header-content">
         <a href="#" class="brand">
           <span class="brand__mark"></span>
-          <span>Technical Workflows in Game Development</span>
         </a>
+        
+        <!-- Navigation Menu -->
+        <nav class="main-nav" id="main-nav">
+          <ul class="nav-list">
+            <li><a href="#hero" class="nav-link">Home</a></li>
+            <li><a href="#learn" class="nav-link">Learn</a></li>
+            <li><a href="#about" class="nav-link">About</a></li>
+          </ul>
+        </nav>
+        
         <div class="header-actions">
           <button class="btn btn--icon" id="theme-toggle" aria-label="Toggle theme">
             <svg class="icon icon--sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -40,66 +49,84 @@
           <button class="btn btn--primary" id="start-presentation">
             Start Presentation
           </button>
+          <button class="btn btn--icon mobile-menu-toggle" id="mobile-menu-toggle" aria-label="Toggle menu">
+            <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <line x1="3" y1="6" x2="21" y2="6"></line>
+              <line x1="3" y1="12" x2="21" y2="12"></line>
+              <line x1="3" y1="18" x2="21" y2="18"></line>
+            </svg>
+          </button>
         </div>
       </div>
     </header>
 
+    <!-- Mobile Menu Overlay -->
+    <div class="mobile-menu-overlay" id="mobile-menu-overlay">
+      <nav class="mobile-nav">
+        <ul class="mobile-nav-list">
+          <li><a href="#hero" class="mobile-nav-link">Home</a></li>
+          <li><a href="#learn" class="mobile-nav-link">Learn</a></li>
+          <li><a href="#about" class="mobile-nav-link">About</a></li>
+        </ul>
+      </nav>
+    </div>
+
     <!-- Main Website Content -->
     <main class="main-content">
       <!-- Hero Section -->
-      <section class="hero">
-        <h1>Technical Workflows</h1>
-        <p>in Game Development</p>
+      <section class="hero" id="hero">
+        <h1>Workflows.</h1>
+        <p>The backbone of game development.</p>
         <div class="hero-actions">
           <button class="btn btn--primary" id="start-presentation-hero">
-            View Presentation
+            Start
           </button>
           <button class="btn" id="view-outline">
-            View Outline
+            Outline
           </button>
         </div>
       </section>
 
       <!-- Presentation Overview -->
-      <section class="section">
-        <h2>What You'll Learn</h2>
+      <section class="section" id="learn">
+        <h2>Learn.</h2>
         <div class="content-grid">
           <div class="content-item">
             <div class="slide-icon">🎮</div>
-            <h3>Version Control</h3>
-            <p>Source & asset management strategies that prevent chaos</p>
+            <h3>Control</h3>
+            <p>Prevent chaos</p>
           </div>
           <div class="content-item">
             <div class="slide-icon">⚙️</div>
-            <h3>Build Automation</h3>
-            <p>Reliable compiling & packaging workflows</p>
+            <h3>Automation</h3>
+            <p>Reliable builds</p>
           </div>
           <div class="content-item">
             <div class="slide-icon">🎯</div>
-            <h3>Asset Management</h3>
-            <p>Organization that prevents version conflicts</p>
+            <h3>Management</h3>
+            <p>Organized assets</p>
           </div>
           <div class="content-item">
             <div class="slide-icon">🔍</div>
             <h3>Testing</h3>
-            <p>Quality assurance at every step</p>
+            <p>Quality assured</p>
           </div>
           <div class="content-item">
             <div class="slide-icon">📋</div>
             <h3>Documentation</h3>
-            <p>Knowledge that outlasts people</p>
+            <p>Knowledge preserved</p>
           </div>
           <div class="content-item">
             <div class="slide-icon">🚀</div>
-            <h3>Integration & Release</h3>
-            <p>Safe, predictable delivery</p>
+            <h3>Release</h3>
+            <p>Safe delivery</p>
           </div>
         </div>
       </section>
 
       <!-- About Section -->
-      <section class="section">
-        <h2>About This Presentation</h2>
+      <section class="section" id="about">
+        <h2>About.</h2>
         <div class="content-item">
           <p class="text-muted">
             This presentation explores the essential technical workflows that make game development 
@@ -129,20 +156,6 @@
     <header class="presentation-header">
       <div class="brand">
         <span class="brand__mark"></span>
-        <span>Technical Workflows in Game Development</span>
-      </div>
-      <div class="presentation-progress">
-        <div class="progress">
-          <div id="progress-bar"></div>
-        </div>
-      </div>
-      <div class="presentation-controls">
-        <button class="btn btn--icon" id="exit-presentation" aria-label="Exit presentation">
-          <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <line x1="18" y1="6" x2="6" y2="18"></line>
-            <line x1="6" y1="6" x2="18" y2="18"></line>
-          </svg>
-        </button>
       </div>
     </header>
 
@@ -152,8 +165,8 @@
       <div class="slide active" data-slide="1">
         <div class="slide-content">
           <div class="slide-icon">🎮</div>
-          <h1>Technical Workflows</h1>
-          <p class="subtitle">in Game Development</p>
+          <h1>Workflows.</h1>
+          <p class="subtitle">The backbone of game development.</p>
           <p class="meta">Sreyeesh Garimella • 2025</p>
           <p class="hint">←/→ or Space/Backspace • F fullscreen</p>
         </div>
@@ -190,11 +203,11 @@
       <div class="slide" data-slide="3">
         <div class="slide-content">
           <div class="slide-icon">⚡</div>
-          <h2>Key Message</h2>
-          <blockquote style="font-size: 2rem; font-style: italic; margin: 2rem 0; color: var(--accent);">
-            "Workflows are not bureaucracy. They are survival."
+          <h2>Truth.</h2>
+          <blockquote style="font-size: 3rem; margin: 3rem 0; color: var(--fg);">
+            "Workflows are survival."
           </blockquote>
-          <p class="subtitle">The invisible systems that let creativity flow without being crushed by disorder</p>
+          <p class="subtitle">Not bureaucracy. Survival.</p>
         </div>
       </div>
 
@@ -364,24 +377,24 @@
       <div class="slide" data-slide="10">
         <div class="slide-content">
           <div class="slide-icon">📋</div>
-          <h2>5. Documentation & Communication</h2>
+          <h2>Documentation.</h2>
           <p class="subtitle">Workflows only matter if they are known and followed</p>
           <div class="content-grid">
             <div class="content-item">
-              <h3>Lightweight Documentation</h3>
-              <p>Notion, Confluence, HacknPlan</p>
+              <h3>Document</h3>
+              <p>Lightweight tools</p>
             </div>
             <div class="content-item">
-              <h3>Document Why</h3>
-              <p>Reasoning matters as much as how</p>
+              <h3>Explain</h3>
+              <p>Why matters</p>
             </div>
             <div class="content-item">
-              <h3>Build Status</h3>
-              <p>Connect to Slack/Discord for visibility</p>
+              <h3>Connect</h3>
+              <p>Build status visibility</p>
             </div>
             <div class="content-item">
-              <h3>Auto-Generate</h3>
-              <p>Release notes and changelogs from commits</p>
+              <h3>Generate</h3>
+              <p>Auto-release notes</p>
             </div>
           </div>
         </div>
@@ -417,8 +430,8 @@
       <!-- SCOPE & VERTICAL SLICE -->
       <div class="slide" data-slide="12">
         <div class="slide-content">
-          <div class="slide-icon">🎲</div>
-          <h2>7. Scope & Vertical Slice Workflow</h2>
+          <div class="slide-icon">��</div>
+          <h2>Scope.</h2>
           <p class="subtitle">Scope kills projects more than anything else</p>
           <div class="content-grid">
             <div class="content-item">
@@ -526,11 +539,11 @@
       <div class="slide" data-slide="16">
         <div class="slide-content">
           <div class="slide-icon">❓</div>
-          <h2>Final Question</h2>
-          <blockquote style="font-size: 2rem; font-style: italic; margin: 2rem 0; color: var(--accent);">
-            "What workflows will carry us to the finish line?"
+          <h2>Question.</h2>
+          <blockquote style="font-size: 3rem; margin: 3rem 0; color: var(--fg);">
+            "What workflows will you build?"
           </blockquote>
-          <p class="subtitle">The difference between endless prototypes and playable games</p>
+          <p class="subtitle">Success depends on your answer.</p>
         </div>
       </div>
 
@@ -548,7 +561,7 @@
 
     <!-- Presentation Navigation -->
     <nav class="presentation-nav">
-      <div class="slide-counter" id="slide-counter">1 / 18</div>
+      <div class="slide-counter" id="slide-counter">1 / 17</div>
       <div class="nav-controls">
         <button class="btn btn--nav" id="prev-btn" aria-label="Previous slide">
           <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">

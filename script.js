@@ -4,16 +4,20 @@
   // ============================================
   const presentationMode = document.getElementById("presentation-mode");      // Main presentation container
   const slides = Array.from(document.querySelectorAll(".slide"));            // All slide elements as array
-  const progressBar = document.getElementById("progress-bar");               // Progress indicator
   const slideCounter = document.getElementById("slide-counter");             // Shows "X / Y" slide count
   const themeToggle = document.getElementById("theme-toggle");               // Light/dark theme switcher
   const prevBtn = document.getElementById("prev-btn");                       // Previous slide button
   const nextBtn = document.getElementById("next-btn");                       // Next slide button
   const fullscreenBtn = document.getElementById("fullscreen-btn");           // Toggle fullscreen mode
-  const exitPresentationBtn = document.getElementById("exit-presentation");  // Exit presentation button
   const startPresentationBtn = document.getElementById("start-presentation"); // Start presentation button
   const startPresentationHeroBtn = document.getElementById("start-presentation-hero"); // Hero start button
   const viewOutlineBtn = document.getElementById("view-outline");            // Jump to outline button
+  const mobileMenuToggle = document.getElementById("mobile-menu-toggle");    // Mobile menu toggle button
+  const mobileMenuOverlay = document.getElementById("mobile-menu-overlay");  // Mobile menu overlay
+  
+  // Debug: Check if elements are found
+  console.log('Mobile menu toggle found:', !!mobileMenuToggle);
+  console.log('Mobile menu overlay found:', !!mobileMenuOverlay);
 
   // ============================================
   // APPLICATION STATE - Track current presentation state
@@ -22,6 +26,60 @@
   let touchStartX = null;           // X coordinate where touch gesture started
   let touchStartY = null;           // Y coordinate where touch gesture started  
   let isPresentationMode = false;   // Whether we're currently in presentation mode
+
+  // ============================================
+  // MOBILE MENU FUNCTIONS - Handle mobile navigation
+  // ============================================
+  
+  /**
+   * Toggle mobile menu visibility
+   */
+  function toggleMobileMenu() {
+    console.log('Toggle mobile menu clicked');
+    if (mobileMenuOverlay) {
+      mobileMenuOverlay.classList.toggle('active');
+      console.log('Mobile menu toggled, active class:', mobileMenuOverlay.classList.contains('active'));
+    } else {
+      console.log('Mobile menu overlay not found');
+    }
+  }
+  
+  /**
+   * Close mobile menu
+   */
+  function closeMobileMenu() {
+    if (mobileMenuOverlay) {
+      mobileMenuOverlay.classList.remove('active');
+    }
+  }
+  
+  /**
+   * Smooth scroll to section
+   * @param {string} targetId - ID of the target section
+   */
+  function scrollToSection(targetId) {
+    console.log('Scrolling to section:', targetId);
+    
+    // If in presentation mode, exit first
+    if (isPresentationMode) {
+      console.log('Exiting presentation mode to navigate');
+      exitPresentationMode();
+    }
+    
+    const target = document.getElementById(targetId);
+    if (target) {
+      // Small delay to ensure presentation mode has exited
+      setTimeout(() => {
+        target.scrollIntoView({
+          behavior: 'smooth',
+          block: 'start'
+        });
+        console.log('Scrolled to target');
+      }, 100);
+    } else {
+      console.log('Target element not found:', targetId);
+    }
+  }
 
   // ============================================
   // UTILITY FUNCTIONS - Helper functions for common operations
@@ -67,11 +125,12 @@
   // ============================================
   
   /**
-   * Enters presentation mode - hides UI, shows slides, prevents scrolling
+   * Enters presentation mode - shows slides while keeping navigation visible
    */
   function enterPresentationMode() {
     isPresentationMode = true;
     presentationMode.classList.add("active");        // Show presentation container
+    document.body.classList.add("presentation-active"); // Add body class for CSS targeting
     document.body.style.overflow = "hidden";         // Prevent page scrolling
     setSlide(0);                                     // Start at first slide
   }
@@ -82,6 +141,7 @@
   function exitPresentationMode() {
     isPresentationMode = false;
     presentationMode.classList.remove("active");     // Hide presentation container
+    document.body.classList.remove("presentation-active"); // Remove body class
     document.body.style.overflow = "";               // Restore page scrolling
   }
 
@@ -115,11 +175,6 @@
       slide.classList.toggle("active", idx === currentSlideIndex);
     });
     
-    // Update progress bar percentage based on current position
-    if (progressBar) {
-      const pct = ((currentSlideIndex + 1) / slides.length) * 100;
-      progressBar.style.width = pct + "%";
-    }
     
     updateSlideCounter();
     
@@ -198,6 +253,8 @@
     const currentTheme = document.documentElement.getAttribute('data-theme');
     const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
     
+    console.log('Toggling theme from', currentTheme, 'to', newTheme);
+    
     // Update document root theme attribute
     document.documentElement.setAttribute('data-theme', newTheme);
     
@@ -206,6 +263,8 @@
     
     // Save preference for future visits
     localStorage.setItem('presentation-theme', newTheme);
+    
+    console.log('Theme updated to:', document.documentElement.getAttribute('data-theme'));
   }
 
   // ============================================
@@ -325,10 +384,6 @@
     startPresentationHeroBtn.addEventListener('click', enterPresentationMode);
   }
 
-  // Exit presentation button
-  if (exitPresentationBtn) {
-    exitPresentationBtn.addEventListener('click', exitPresentationMode);
-  }
 
   // Navigation buttons - previous/next slide
   if (prevBtn) {
@@ -342,6 +397,20 @@
   // Theme toggle button
   if (themeToggle) {
     themeToggle.addEventListener('click', toggleTheme);
+  }
+
+  // Mobile menu toggle button
+  if (mobileMenuToggle) {
+    mobileMenuToggle.addEventListener('click', toggleMobileMenu);
+  }
+
+  // Close mobile menu when clicking on overlay
+  if (mobileMenuOverlay) {
+    mobileMenuOverlay.addEventListener('click', (e) => {
+      if (e.target === mobileMenuOverlay) {
+        closeMobileMenu();
+      }
+    });
   }
 
   // Fullscreen toggle button
@@ -454,13 +523,10 @@
   document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     anchor.addEventListener('click', function (e) {
       e.preventDefault();
-      const target = document.querySelector(this.getAttribute('href'));
-      if (target) {
-        target.scrollIntoView({
-          behavior: 'smooth',
-          block: 'start'
-        });
-      }
+      const targetId = this.getAttribute('href').substring(1);
+      console.log('Navigation link clicked:', targetId, 'from element:', this);
+      scrollToSection(targetId);
+      closeMobileMenu(); // Close mobile menu after navigation
     });
   });
 
